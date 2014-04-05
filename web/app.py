@@ -1,5 +1,10 @@
-from flask import Flask, render_template
+# mostly from 
+from flask import Flask, render_template, url_for
 app = Flask(__name__)
+
+@app.route("/bootstrap.css")
+def boot():
+    url_for('static', filename='bootstrap.css')
 
 @app.route("/")
 def hel():
