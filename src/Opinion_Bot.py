@@ -2,6 +2,8 @@
 import sys
 import argparse
 import nltk
+import warnings
+warnings.simplefilter('ignore')
 
 # args
 init_args = argparse.ArgumentParser(
