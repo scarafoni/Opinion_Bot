@@ -9,7 +9,7 @@ from toMongo import *
 
 def main():
     f = open('../personalities/mac_lover.txt')
-    tm = toMongo(f.read())
+    tm = toMongo("Rush Limbaugh", f.read())
     print tm
     f.close()
 

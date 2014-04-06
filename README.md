@@ -8,6 +8,13 @@ Manifest
 	/planning- contains files illustrating the outline of the program and future design ideas/issues
 
 
+Requirements
+------------
+nltk
+pymongo
+MongoHQ instance
+
+
 Plan
 ---------
 Use MongoDB to store Markov chain data/political speeches
