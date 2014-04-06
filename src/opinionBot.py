@@ -19,6 +19,6 @@ def generate_probabilities():
     get_probabilities("Rush Limbaugh")
 
 if __name__ == '__main__':
-    get_speeches()
+    generate_probabilities()
 
 
