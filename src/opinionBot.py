@@ -6,15 +6,19 @@
 
 from getLimbaughSpeeches import *
 from toMongo import *
+from generateText import *
 
 
 def get_speeches():
-    get_limbaugh_speeches('../personalities/limbaugh/',100)
+    get_limbaugh_speeches('../personalities/limbaugh/',10)
 
 def write_to_mongo():
     mongo_write()
 
+def generate_probabilities():
+    get_probabilities("Rush Limbaugh")
+
 if __name__ == '__main__':
-    write_to_mongo()
+    get_speeches()
 
 
