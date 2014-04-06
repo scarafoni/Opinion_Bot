@@ -12,7 +12,7 @@ do
 	python src/Opinion_Bot.py con_text.txt $gram -o lib_text.txt
 	printf "\n\n\n"
 	printf "MICHAEL_BLOOMBOT:\n " 
-	sleep 3
+	sleep 5
 	python src/Opinion_Bot.py lib_text.txt $gram -o con_text.txt
 	printf "\n\n\n"
 
