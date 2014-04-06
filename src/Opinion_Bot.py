@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import sys
 import argparse
-from nltk.util import ngrams
+import nltk
 
 # args
 init_args = argparse.ArgumentParser(
@@ -26,17 +26,20 @@ init_args.add_argument('-o', '--outfile',
                        default=sys.stdout)
 
 
-def main():
+if __name__ == '__main__':
     args = init_args.parse_args()
     in_file = args.infile
     out_file = args.outfile
-    if in_file.endswith('.txt'):
+    text = None
+    if in_file.name.endswith('.txt'):
         text = in_file.read()
-    text = out_file.read()
+        print('text ', text)
+        in_file.close()
 
     # generate ngrams text
+    
     gram_size = args.gramsize
-    gram_list = ngrams(text, gram_size)
-    starting_words = gram_list.generate(100)[-2:]
-    content = starting_words.generate(100, starting_words)
-    out_file.write(content)
+    nltk_text = nltk.Text(text)
+    new_sentence = nltk_text.generate(100)
+    out_file.write(new_sentence)
+    out_file.close()
