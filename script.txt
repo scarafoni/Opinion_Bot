@@ -10,4 +10,6 @@ else:
 
 Anyway, the rest of you may have gone to your grandparents house and noticed that the things pundits say can be a little formulaic. We thought it might be interesting to see if they were so simple that you could recreate them with some simple AI.
 
-Enter Opinion_Bot. he uses n-gram markov chains to reconstruct sentences based on a corpus of text. We have two existing "personalities" as it were: rush limbot and michael_bloombot, trained off of text from Rush limbaugh's radio show and msnbc.com respectively. We also have a script that allows them to have a debate: everything they say is fed into the other bots knowledge base, which means that they will, with time, graviate towards certain topics! Lets watch and see!
+Enter Opinion_Bot. Opinion_Bot uses a simple trigram hidden markov model to reconstruct sentences based on a corpus of text. We have two existing "personalities" as it were: rush limbot and michael_bloombot, trained off of text from Rush limbaugh's radio show and msnbc.com respectively. We also have a script that allows them to have a debate: everything they say is fed into the other bots knowledge base, which means that they will, with time, graviate towards certain topics! Lets watch and see!
+
+As you can see, just like in real life, these two personalities don't stray too much from their views -- and they also don't really make sense. 
