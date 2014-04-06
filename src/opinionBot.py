@@ -5,20 +5,23 @@
 # April 5-6, 2014
 
 from getLimbaughSpeeches import *
-from toMongo import *
+from toProbabilities import *
 from generateText import *
 
 
 def get_speeches():
     get_limbaugh_speeches('../personalities/limbaugh/',10)
 
-def write_to_mongo():
-    mongo_write()
+def determine_probabilities():
+    print probability_read()
+
+def concat():
+    concat_files('../personalities/limbaugh/')
 
 def generate_probabilities():
     get_probabilities("Rush Limbaugh")
 
 if __name__ == '__main__':
-    generate_probabilities()
+    concat()
 
 

@@ -10,7 +10,7 @@ from nltk.util import ngrams
 from collections import Counter
 import string
 
-MAX_NGRAM = 6
+MAX_NGRAM = 3
 
 
 # Computes n-gram counts for words in a given sentence
