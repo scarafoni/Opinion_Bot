@@ -22,7 +22,7 @@ init_args.add_argument('-o', '--outfile',
                        'must be either .txt (plain text) or .csv'
                        '(markov table), if non specified,'
                        'will print plain text to stdio',
-                       type=argparse.FileType('w'),
+                       type=argparse.FileType('a'),
                        default=sys.stdout)
 
 
@@ -40,6 +40,8 @@ if __name__ == '__main__':
     # generate ngrams text
     model = nltk.NgramModel(gram_size, text)
     starting_words = model.generate(100)[-2:]
-    model_words = model.generate(1000, starting_words)
-    out_file.write(' '.join([word for word in model_words]))
+    model_words = model.generate(50, starting_words)
+    speech = ' '.join([word for word in model_words])
+    print(speech)
+    out_file.write(speech)
     out_file.close()

@@ -1,0 +1,10 @@
+#!/bin/bash
+touch lib_text.txt
+touch con_text.txt
+
+cat personalities/bloomberg/MASTER.txt > lib_text
+cat personalities/limbaugh/MASTER.txt > con_text
+i=1
+while [$i -le 10]
+do
+	python src/Opinion_bot 3 	
