@@ -21,7 +21,10 @@ def concat():
 def generate_probabilities():
     get_probabilities("Rush Limbaugh")
 
+def generate():
+    get_file_data('../personalities/limbaugh/')
+
 if __name__ == '__main__':
-    concat()
+    generate()
 
 

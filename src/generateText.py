@@ -7,14 +7,15 @@
 
 from pymongo import MongoClient
 from ourNgrams import *
+from nltk import *
 
-# sets up connection to MongoHQ
-f = open('mongospecs.txt')
-[user, password] = f.read().split()
-client = MongoClient('mongodb://' + str(user) + ':' + str(password) + '@oceanic.mongohq.com:10096/opinion_bot')
-db = client['opinion_bot']
-speeches = db['speeches']
-authors = db['authors']
+# # sets up connection to MongoHQ
+# f = open('mongospecs.txt')
+# [user, password] = f.read().split()
+# client = MongoClient('mongodb://' + str(user) + ':' + str(password) + '@oceanic.mongohq.com:10096/opinion_bot')
+# db = client['opinion_bot']
+# speeches = db['speeches']
+# authors = db['authors']
 
 # retrieves the n-gram counts from MongoHQ
 def get_counts_data(author):
@@ -35,6 +36,28 @@ def get_probabilities(author):
     # then go through 1-gram to n-gram, getting probabilities for each n-gram transition
     unigram_probabilities = {tup[0]: tup[1]/totals[1] for tup in ngram_split[0]}
     print unigram_probabilities
+
+
+def get_file_data(folder):
+    f = open(folder + 'MASTER.txt', 'r').read()
+    text = Text(word_tokenize(f))
+    new_sentence = generate(text, 100, 4)
+
+# from the NLTK documentation
+def generate(text, length=100, gram=3):
+        """
+        Print random text, generated using a trigram language model.
+
+        :param length: The length of text to generate (default=100)
+        :type length: int
+        :seealso: NgramModel
+        """
+        estimator = lambda fdist, bins: LidstoneProbDist(fdist, 0.2)
+        _trigram_model = NgramModel(gram, text, estimator=estimator)
+        text = _trigram_model.generate(length)
+        print(tokenwrap(text))
+
+
 
 
 
