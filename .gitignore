@@ -1,6 +1,9 @@
 # MongoHQ details
 src/mongospecs.txt
 
+# speech transcripts
+personalities/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
