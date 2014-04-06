@@ -40,6 +40,6 @@ if __name__ == '__main__':
     # generate ngrams text
     model = nltk.NgramModel(gram_size, text)
     starting_words = model.generate(100)[-2:]
-    model_words = model.generate(10, starting_words)
+    model_words = model.generate(1000, starting_words)
     out_file.write(' '.join([word for word in model_words]))
     out_file.close()
