@@ -8,10 +8,18 @@ Manifest
 	/planning- contains files illustrating the outline of the program and future design ideas/issues
 
 
+Requirements
+------------
+nltk
+pymongo
+bs4 (BeautifulSoup)
+MongoHQ instance
+
+
 Plan
 ---------
-Use MongoDB to store Markov chain data/political speeches
-Each time we analyze a new political speech, update the transition probabilities in Mongo and add a new "Speech" document
+Use MongoDB to store Markov chain data/political speeches (done)
+Each time we analyze a new political speech, update the transition probabilities in Mongo and add a new "Speech" document (done)
 Put each politician/radio host bot on a spectrum based on their opinions 
 Uses (potential final products):
 	-Rush Limbot (generate new speeches in the style of a politician/radio host)
