@@ -32,4 +32,4 @@ def main():
     args = init_args.parse_args()
     gram_size = args.gramsize
     n_grams = ngrams(text.split(), gram_size)
-    output.write(
+    output.write(n_grams)
