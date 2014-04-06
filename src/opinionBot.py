@@ -4,16 +4,21 @@
 # HackNY Fall 2014 Hackathon
 # April 5-6, 2014
 
+from getLimbaughSpeeches import *
 from toMongo import *
+from generateText import *
 
 
-def main():
-    f = open('../personalities/mac_lover.txt')
-    tm = toMongo(f.read())
-    print tm
-    f.close()
+def get_speeches():
+    get_limbaugh_speeches('../personalities/limbaugh/',10)
+
+def write_to_mongo():
+    mongo_write()
+
+def generate_probabilities():
+    get_probabilities("Rush Limbaugh")
 
 if __name__ == '__main__':
-    main()
+    get_speeches()
 
 

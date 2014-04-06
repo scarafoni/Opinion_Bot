@@ -22,7 +22,7 @@ init_args.add_argument('-o', '--outfile',
                        'must be either .txt (plain text) or .csv'
                        '(markov table), if non specified,'
                        'will print plain text to stdio',
-                       type=argparse.FileType('r'),
+                       type=argparse.FileType('w'),
                        default=sys.stdout)
 
 
@@ -41,5 +41,6 @@ if __name__ == '__main__':
     gram_size = args.gramsize
     nltk_text = nltk.Text(text)
     new_sentence = nltk_text.generate(100)
+    print new_sentence
     out_file.write(new_sentence)
     out_file.close()
