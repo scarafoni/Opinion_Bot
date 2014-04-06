@@ -2,22 +2,22 @@
 import sys
 import argparse
 from nltk.util import ngrams
-from collections import Counter
 
 # args
 init_args = argparse.ArgumentParser(
     description='creates an n-gram markov bot with'
     'very reasonable political opinions indeed')
 
-init_args.add_argument('input',
+init_args.add_argument('infile',
                        help='the input file to be read,'
-                       'must be either .csv (probability table)' 'or .txt (plain text)',
+                       'must be either .csv (probability table)'
+                       'or .txt (plain text)',
                        type=argparse.FileType('r'))
 init_args.add_argument('gramsize',
                        help='the size of the grams for the program',
                        type=int)
 
-init_args.add_argument('-o', '--output',
+init_args.add_argument('-o', '--outfile',
                        help='specify the output of the file,'
                        'must be either .txt (plain text) or .csv'
                        '(markov table), if non specified,'
@@ -27,9 +27,16 @@ init_args.add_argument('-o', '--output',
 
 
 def main():
-    if input.endswith('.txt'):
-        text = input.read()
     args = init_args.parse_args()
+    in_file = args.infile
+    out_file = args.outfile
+    if in_file.endswith('.txt'):
+        text = in_file.read()
+    text = out_file.read()
+
+    # generate ngrams text
     gram_size = args.gramsize
-    n_grams = ngrams(text.split(), gram_size)
-    output.write(n_grams)
+    gram_list = ngrams(text, gram_size)
+    starting_words = gram_list.generate(100)[-2:]
+    content = starting_words.generate(100, starting_words)
+    out_file.write(content)
