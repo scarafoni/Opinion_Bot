@@ -8,6 +8,6 @@ if multiple people raise their hands:
 else:
 	well thank God
 
-Anyway, the rest of you may have gone to your grandparents house and noticedthat the things pundits say can be a little formulaic. We thought it might be interesting to see if they were so simple that you could recreate them with some simple AI
+Anyway, the rest of you may have gone to your grandparents house and noticed that the things pundits say can be a little formulaic. We thought it might be interesting to see if they were so simple that you could recreate them with some simple AI.
 
 Enter Opinion_Bot. he uses n-gram markov chains to reconstruct sentences based on a corpus of text. We have two existing "personalities" as it were: rush limbot and michael_bloombot, trained off of text from Rush limbaugh's radio show and msnbc.com respectively. We also have a script that allows them to have a debate: everything they say is fed into the other bots knowledge base, which means that they will, with time, graviate towards certain topics! Lets watch and see!
