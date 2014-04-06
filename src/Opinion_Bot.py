@@ -28,19 +28,18 @@ init_args.add_argument('-o', '--outfile',
 
 if __name__ == '__main__':
     args = init_args.parse_args()
+    gram_size = args.gramsize
     in_file = args.infile
     out_file = args.outfile
     text = None
     if in_file.name.endswith('.txt'):
-        text = in_file.read()
-        print('text ', text)
+        tokens = nltk.word_tokenize(in_file.read())
+        text = nltk.Text(tokens)
         in_file.close()
 
     # generate ngrams text
-    
-    gram_size = args.gramsize
-    nltk_text = nltk.Text(text)
-    new_sentence = nltk_text.generate(100)
-    print new_sentence
-    out_file.write(new_sentence)
+    model = nltk.NgramModel(gram_size, text)
+    starting_words = model.generate(100)[-2:]
+    model_words = model.generate(10, starting_words)
+    out_file.write(' '.join([word for word in model_words]))
     out_file.close()
