@@ -8,6 +8,7 @@
 from pymongo import MongoClient
 from ourNgrams import *
 from collections import Counter
+import os
 
 # sets up connection to MongoHQ
 f = open('mongospecs.txt')
@@ -43,14 +44,41 @@ def toMongo(author, speech):
         author_find = authors.find_one({"author": author})
         if author_find is None:
             mongo_author = {"author": author,
-                            "speeches": [speech_id],
-                            "ngram_counts": ngram_counts_mongo_form
+                            "speeches": [speech_id]
+                            # "ngram_counts": ngram_counts_mongo_form
                             }
             author_id = authors.insert(mongo_author)
         else:
+            # in order to update the counts, pull all the information down 
             authors.update({"author": author}, {'$push': {"speeches": speech_id}})
+    # return the master counts
+    return master_counts
 
+# gets all Rush Limbaugh transcripts
+# from http://stackoverflow.com/questions/3964681/find-all-files-in-directory-with-extension-txt-with-python
+def get_limbaugh():
+    files = []
+    for file in os.listdir("../personalities/limbaugh"):
+        if file.endswith(".txt"):
+            files.append(file)
+    return files
 
+# writes counts/speeches to MongoHQ
+def mongo_write():
+    counter = 0
+    l = get_limbaugh()
+    count_master = [Counter() for n in range(MAX_NGRAM)]
+    for file in l:
+        f = open('../personalities/limbaugh/'+file, 'r').read().split('\n')
+        if f[1] != '':
+            new_counts = toMongo(f[0], ''.join(f[1:]))
+            print "wrote speech " + file
+            if counter < 150:
+                [count_master[n].update(new_counts[n]) for n in range(MAX_NGRAM)]
+                counter += 1
+    # write the counts to the author file
+    ngram_counts_mongo_form = [{' '.join(elem): count_master[n][elem] for elem in list(count_master[n])} for n in range(MAX_NGRAM)]
+    authors.update({"author": "Rush Limbaugh"}, {"ngram_counts": ngram_counts_mongo_form})
 
 
 

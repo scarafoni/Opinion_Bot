@@ -6,27 +6,13 @@
 
 from getLimbaughSpeeches import *
 from toMongo import *
-import os
-
-# gets all Rush Limbaugh transcripts
-# from http://stackoverflow.com/questions/3964681/find-all-files-in-directory-with-extension-txt-with-python
-def get_limbaugh():
-    files = []
-    for file in os.listdir("../personalities/limbaugh"):
-        if file.endswith(".txt"):
-            files.append(file)
-    return files
 
 
 def get_speeches():
-    get_limbaugh_speeches('../personalities/limbaugh/',10)
+    get_limbaugh_speeches('../personalities/limbaugh/',100)
 
 def write_to_mongo():
-    l = get_limbaugh()
-    for file in l:
-        f = open('../personalities/limbaugh/'+file, 'r').read().split('\n')
-        if f[1] != '':
-            toMongo(f[0], ''.join(f[1:]))
+    mongo_write()
 
 if __name__ == '__main__':
     write_to_mongo()
