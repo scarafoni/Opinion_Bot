@@ -1,0 +1,3 @@
+Song, Chaoming, et al. "Limits of predictability in human mobility." Science 327.5968 (2010): 1018-1021.
+      -Human movement is predictable
+      -measure entropy of trajectory
