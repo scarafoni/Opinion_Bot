@@ -25,6 +25,9 @@ Cover, Thomas M., and Joy A. Thomas. Elements of information theory. John Wiley 
 	-markov chain X->Y->Z
 		-p(x,y,z) = p(x)p(y|x)p(z|y)
 		-I(X;Y) >= I(X;Z)
+    ---Entropy of English---
+        -ergodic: can deduce properties from a suffiently long sample
+    -second+order word model: transition probabilities match english
 	
 MDL slides
     -how to measure regularity?
