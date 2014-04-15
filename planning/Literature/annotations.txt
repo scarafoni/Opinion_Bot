@@ -26,3 +26,28 @@ Cover, Thomas M., and Joy A. Thomas. Elements of information theory. John Wiley 
 		-p(x,y,z) = p(x)p(y|x)p(z|y)
 		-I(X;Y) >= I(X;Z)
 	
+MDL slides
+    -how to measure regularity?
+    -kolmogorov complexity: length of shorted program that prints the sequence
+    -invariance: length of two shortest programs in distrinct languages differ by no more than length C.
+    -MDL principle:
+        -f if you have data X and machine M, you can ancode X with M
+        -can encode M
+        -complete code is L(X,M)
+        -model M* best describing D is L(X,M*) with shortest length
+        -MDL principle: L(X,M) = L(X|M) + L(M) (+ = concatonation)
+            -L(X|M) = data encoded with benifit of M
+            -L(M) = encoded model
+        -posterior density for m, data X:
+            -g(m|X) = g(X|m)g(m)
+            -g(X|m) is data conditional on model, g(m) is prior density
+    -ngrams are 0-1 nxn matrix
+        -can partition into blocks (submatrices consisting of 1's)
+        -code graph by identifying all blocks
+            -identify edges "sides" of block
+
+
+Bartholomew, David J. "Errors of prediction for Markov chain models." Journal of the Royal Statistical Society. Series B (Methodological) (1975): 444-456.
+    -statistical error- error inherent to the probability of moving from one state to another (what we want)
+    -estimation error- we have to estimate what state we're in and sometimes we're wrong
+    -specification error- assumptions of model may not hold in practice
