@@ -7,3 +7,22 @@ Song, Chaoming, et al. "Limits of predictability in human mobility." Science 327
         -if user w entropy S moves between N locations, then PI < PI^{max}(S<N)
             -PI^Max = S = H(PI^max)log2(N-1) w/binary entropy fn H(PI^max) = -PI^max log2(PI^max)-(1-PI^max)log2(1-PI_max)
             -for user with PI^max = .2, 80% of time the individual chooses location in random fashion (only predictable 20% of the time)
+	    -regularity: probability of finding user in most visited location during a given hour
+	    		 -lower pound on predictability PI
+			 -ignores temporal correlations
+
+Cover, Thomas M., and Joy A. Thomas. Elements of information theory. John Wiley & Sons, 2012.
+	-Entropy = H(X) = -SUM_x {p(x)log(p(x))}
+	-I(X,Y) = mutual information, relative entropy between join distributions and product distribution p(x)p(y)
+	-Fano's inequality: related entropy and error of prediction
+		-Pe = probability of error = P(X_c != X} (X_c = estimate of X)
+		-H(Pe) + Pe*log*|L| - 1) >= H(X|Y) L = alphabet of random var
+	-conditioning reduced entropy
+	-for markov chains
+		-relative entropy D(\mu_n || \mu_n') reduces with time
+		-Entropy H(X_n) increases if stationary ditribution is uniform
+		-conditional entropy H(X_0|Y_0) of increases with time for stationary markov chain
+	-markov chain X->Y->Z
+		-p(x,y,z) = p(x)p(y|x)p(z|y)
+		-I(X;Y) >= I(X;Z)
+	
