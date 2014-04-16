@@ -27,7 +27,7 @@ Cover, Thomas M., and Joy A. Thomas. Elements of information theory. John Wiley 
 		-I(X;Y) >= I(X;Z)
     ---Entropy of English---
         -ergodic: can deduce properties from a suffiently long sample
-    -second+order word model: transition probabilities match english
+        -second+order word model: transition probabilities match english
 	
 MDL slides
     -how to measure regularity?
@@ -54,3 +54,4 @@ Bartholomew, David J. "Errors of prediction for Markov chain models." Journal of
     -statistical error- error inherent to the probability of moving from one state to another (what we want)
     -estimation error- we have to estimate what state we're in and sometimes we're wrong
     -specification error- assumptions of model may not hold in practice
+    
