@@ -55,3 +55,6 @@ Bartholomew, David J. "Errors of prediction for Markov chain models." Journal of
     -estimation error- we have to estimate what state we're in and sometimes we're wrong
     -specification error- assumptions of model may not hold in practice
     
+Mari, Jean-Francois, Jean Paul Haton, and Abdelaziz Kriouile. "Automatic word recognition based on second-order hidden Markov models." IEEE Transactions on speech and Audio Processing 5.1 (1997): 22-25.
+    -hmm1 models for text have problems, can underfit sentences
+    -hmmN models have n-dimensional transition matrix
