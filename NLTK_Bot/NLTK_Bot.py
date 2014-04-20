@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import sys
+# import sys
 import nltk
 import string
 
@@ -11,6 +11,18 @@ class Listener:
     def __init__(self, n, text):
         self.n = n
         # strip the punctuation and split the string
-        print('text before', text)
         text = text.translate(None, string.punctuation)
-        print(text)
+        text = ' '.join(text.split())
+        self.text = text.split()
+        print(self.text)
+        self.model = nltk.NgramModel(n=self.n, train=self.text)
+        print(self.model.generate(10))
+
+    def make_story(size):
+        word_list = self.model.generate(size)
+        print(' '.join(word_list))
+
+
+if __name__ == '__main__':
+    story = open('../stories/random1.txt','r').read()
+    listener = Listener(2, story)
