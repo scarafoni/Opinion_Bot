@@ -1,28 +1,29 @@
 #!/usr/bin/python
-# import sys
+import sys
 import nltk
 import string
 
 
-class Listener:
+class Listener():
     '''reads in input from a file and builds a markov table as a result'''
-    n = 0
+    grammality = 0
 
     def __init__(self, n, text):
-        self.n = n
+        self.grammality = n
         # strip the punctuation and split the string
         text = text.translate(None, string.punctuation)
         text = ' '.join(text.split())
+        # split on whitespace
         self.text = text.split()
-        print(self.text)
-        self.model = nltk.NgramModel(n=self.n, train=self.text)
-        print(self.model.generate(10))
+        self.model = nltk.NgramModel(self.grammality, self.text)
 
-    def make_story(size):
-        word_list = self.model.generate(size)
+    def make_story(self, size):
+        starters = self.model.generate(10)[-2:]
+        word_list = self.model.generate(size, starters)
         print(' '.join(word_list))
 
 
 if __name__ == '__main__':
-    story = open('../stories/random1.txt','r').read()
-    listener = Listener(2, story)
+    story = open('../stories/'+sys.argv[1]+'.txt', 'r').read()
+    listener = Listener(int(sys.argv[2]), story)
+    listener.make_story(100)
