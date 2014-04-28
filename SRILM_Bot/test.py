@@ -38,15 +38,17 @@ print "p('there are some good') =" , sprob
 print
 
 # the perplexity
+'''
 sppl = getSentencePpl(n,'there are some good', 4)
 print "ppl('there are some good') =" , sppl
 print
-
+'''
+'''
 # number of OOVs in a sentence
 noov = numOOVs(n, 'there are some foobar', 4)
 print "nOOVs('there are some foobar') = ", noov
 print
-
+'''
 # Query the LM to get the total log probability for the file named 'corpus'
 corpus = 'test.txt'
 corpus_prob = getCorpusProb(n, corpus)
