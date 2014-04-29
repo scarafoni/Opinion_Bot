@@ -6,16 +6,16 @@ import string
 
 class Listener():
     '''reads in input from a file and builds a markov table as a result'''
-    grammality = 0
+    n = 0
 
     def __init__(self, n, text):
-        self.grammality = n
+        self.n = n
         # strip the punctuation and split the string
         text = text.translate(None, string.punctuation)
         text = ' '.join(text.split())
         # split on whitespace
         self.text = text.split()
-        self.model = nltk.NgramModel(self.grammality, self.text)
+        self.model = nltk.NgramModel(self.n, self.text)
 
     def make_story(self, size):
         starters = self.model.generate(10)[-2:]
