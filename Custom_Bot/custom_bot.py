@@ -34,12 +34,12 @@ class Transition_Table:
             for gram2 in grams:
                 print(gram1, gram2, self.table[gram1][gram2])
 
-    def populate_table(self, text_list):
-        # this text creates n-grams, fix it to compare a gram
+    def populate_table(self, text_list, n):
+        # this text creates n-grams, fix it to compare a grant
         # with the gram in front of it and make that the transition
         input = input.split(' ')
         output = []
-        for i in range(len(input)-n+1):
+        for i in range(len(input) - n + 1):
             output.append(input[i:i+n])
         return output
 
