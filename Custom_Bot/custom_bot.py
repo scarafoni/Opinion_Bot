@@ -26,7 +26,12 @@ class Transition_Table:
     '''holds n-gram transitions for a markov chain'''
 
     def __init__(self,grams):
-        
+        self.table = dict.fromkeys(grams,dict.fromkeys(grams,0))
+        for gram1 in grams:
+            for gram2 in grams:
+               print(self.table[gram1][gram2])
+
+
 
 if __name__ == '__main__':
     story = open('../stories/'+sys.argv[1]+'.txt', 'r').read()
