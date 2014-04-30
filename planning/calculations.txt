@@ -1,9 +1,0 @@
--calculate conditional entropy from fano's inequality
--calculate entropy of markov model by the theorem on wiki (see pic, X and Y are both 3gram models)
--then measure error you get from predicting individual words and use that to calculate the entropy
--compare the two
--revisit cover and thomas for more info on Fano's inequality
--repeat for various texts
-make sure you can get everything about the markov chains
-    -n
-    -grab by columns, rows, etc...
