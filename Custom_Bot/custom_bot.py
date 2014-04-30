@@ -30,9 +30,6 @@ class Transition_Table:
 
     def __init__(self, grams):
         self.table = dict.fromkeys(grams, dict.fromkeys(grams, 0))
-        for gram1 in grams:
-            for gram2 in grams:
-                print(gram1, gram2, self.table[gram1][gram2])
 
     def populate_table(self, text_list, n):
         for i in range(len(text_list) - n + 1 - n):
@@ -40,8 +37,9 @@ class Transition_Table:
             next_gram = text_list[i+n:i+(2*n)]
             self.table[prev_gram][next_gram] += 1
 
-        return output
-
+    # testing pring function, is usually to big to handle
+    def print_table(self):
+        
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
