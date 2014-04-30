@@ -39,7 +39,7 @@ class Transition_Table:
 
     # testing pring function, is usually to big to handle
     def print_table(self):
-        
+        print('filler')
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
