@@ -11,12 +11,12 @@ class Listener():
     def __init__(self, n, text):
         # strip the punctuation and split the string
         text = text.translate(None, string.punctuation)
-        text = ' '.join(text.split())
+        self.text = ' '.join(text.split())
         # split on whitespace
-        self.text = text.split()
+        self.text_list = text.split()
         # enter the relevant information
         self.n = n
-        self.grams = ngrams(self.text, n)
+        self.grams = ngrams(self.text_list, n)
         self.table = Transition_Table(self.grams)
 
     def make_story(self, size):
@@ -32,11 +32,18 @@ class Transition_Table:
         self.table = dict.fromkeys(grams, dict.fromkeys(grams, 0))
         for gram1 in grams:
             for gram2 in grams:
-                print('')
-                # print(gram1, gram2, self.table[gram1][gram2])
+                print(gram1, gram2, self.table[gram1][gram2])
+
+    def populate_table(self, text_list):
+        # this text creates n-grams, fix it to compare a gram
+        # with the gram in front of it and make that the transition
+        input = input.split(' ')
+        output = []
+        for i in range(len(input)-n+1):
+            output.append(input[i:i+n])
+        return output
 
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
-    print(story)
     listener = Listener(int(sys.argv[2]), story)
