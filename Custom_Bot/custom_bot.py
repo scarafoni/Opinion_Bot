@@ -7,18 +7,23 @@ import string
 class Listener:
     '''reads in input from a file and builds a markov table as a result'''
     n = 0
+    text_list = []
+    grams = []
 
     def __init__(self, n, text):
-        # strip the punctuation and split the string
+        # text corpus as list of words
         text = text.translate(None, string.punctuation)
-        self.text = ' '.join(text.split())
-        # split on whitespace
+        text = ' '.join(text.split())
         self.text_list = text.split()
-        # enter the relevant information
+        # gram number
         self.n = n
-        self.grams = ngrams(self.text_list, n)
-        self.table = Transition_Table(self.text_list, self.grams, n)
+        # list of grams
+        grams = ngrams(self.text_list, n)
+        self.grams = [tuple(gram) for gram in grams]
+        # transition table
+        self.table = Transition_Table(self.text_list, self.grams, self.n)
 
+    # generate a story
     def make_story(self, size):
         starters = self.model.generate(10)[-2:]
         word_list = self.model.generate(size, starters)
@@ -30,12 +35,9 @@ class Transition_Table:
 
     def __init__(self, text_list, grams, n):
         self.table = dict.fromkeys(grams, dict.fromkeys(grams, 0))
-        self.populate_table(text_list, n)
-
-    def populate_table(self, text_list, n):
         for i in range(len(text_list) - n + 1 - n):
             prev_gram = text_list[i:i+n]
-            next_gram = text_list[i+n:i+(2*n)]
+            next_gram = text_list[i+n:i+n+n]
             self.table[prev_gram][next_gram] += 1
         self.print_table()
 
