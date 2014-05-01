@@ -35,18 +35,28 @@ class Transition_Table:
 
     def __init__(self, text_list, grams, n):
         self.table = dict.fromkeys(grams, dict.fromkeys(grams, 0))
+        # populate the table
         for i in range(len(text_list) - n + 1 - n):
             prev_gram = tuple(text_list[i:i+n])
             next_gram = tuple(text_list[i+n:i+n+n])
             self.table[prev_gram][next_gram] += 1
-        print(self.table)
+
+        # normalize the table
+        for gram1 in self.table:
+            c = self.table[gram1]
+            tot = float(sum([c[gram2] for gram2 in c]))
+            for gram2 in c:
+                c[gram2] = float(c[gram2] / tot)
+        self.print_table()
 
     # testing pring function, is usually to big to handle
-    # doesn't work
     def print_table(self):
         for gram1 in self.table:
-            for gram2 in gram1:
+            row_count = 0
+            for gram2 in self.table[gram1]:
+                row_count += self.table[gram1][gram2]
                 print(gram1, gram2, self.table[gram1][gram2])
+            print('row count', row_count)
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
