@@ -39,7 +39,7 @@ class Transition_Table:
             prev_gram = tuple(text_list[i:i+n])
             next_gram = tuple(text_list[i+n:i+n+n])
             self.table[prev_gram][next_gram] += 1
-        self.print_table()
+        # self.print_table()
 
     # testing pring function, is usually to big to handle
     def print_table(self):
