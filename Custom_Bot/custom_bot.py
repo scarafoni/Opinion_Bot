@@ -2,6 +2,7 @@
 import sys
 from nltk import ngrams
 import string
+import Transition_Table
 
 
 class Listener:
@@ -29,34 +30,11 @@ class Listener:
         word_list = self.model.generate(size, starters)
         print(' '.join(word_list))
 
+    def conditional_entropy(dist):
+        sum = 0
+        for val in dist:
+           sum += dist[val]* 
 
-class Transition_Table:
-    '''holds n-gram transitions for a markov chain'''
-
-    def __init__(self, text_list, grams, n):
-        self.table = dict.fromkeys(grams, dict.fromkeys(grams, 0))
-        # populate the table
-        for i in range(len(text_list) - n + 1 - n):
-            prev_gram = tuple(text_list[i:i+n])
-            next_gram = tuple(text_list[i+n:i+n+n])
-            self.table[prev_gram][next_gram] += 1
-
-        # normalize the table
-        for gram1 in self.table:
-            c = self.table[gram1]
-            tot = float(sum([c[gram2] for gram2 in c]))
-            for gram2 in c:
-                c[gram2] = float(c[gram2] / tot)
-        self.print_table()
-
-    # testing pring function, is usually to big to handle
-    def print_table(self):
-        for gram1 in self.table:
-            row_count = 0
-            for gram2 in self.table[gram1]:
-                row_count += self.table[gram1][gram2]
-                print(gram1, gram2, self.table[gram1][gram2])
-            print('row count', row_count)
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
