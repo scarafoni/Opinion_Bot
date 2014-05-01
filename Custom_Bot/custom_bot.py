@@ -36,8 +36,8 @@ class Transition_Table:
     def __init__(self, text_list, grams, n):
         self.table = dict.fromkeys(grams, dict.fromkeys(grams, 0))
         for i in range(len(text_list) - n + 1 - n):
-            prev_gram = text_list[i:i+n]
-            next_gram = text_list[i+n:i+n+n]
+            prev_gram = tuple(text_list[i:i+n])
+            next_gram = tuple(text_list[i+n:i+n+n])
             self.table[prev_gram][next_gram] += 1
         self.print_table()
 
