@@ -20,9 +20,11 @@ class Listener:
         self.n = n
         # list of grams
         grams = ngrams(self.text_list, n)
+        grams = self.rm_dup(grams)
         self.grams = [tuple(gram) for gram in grams]
         # transition table
-        # self.table = Transition_Table(self.text_list, self.grams, self.n)
+        self.table = Transition_Table(self.text_list, self.grams, self.n)
+        self.table.print_table()
 
     def get_row(self, gram):
         return self.table.get_row(gram)
@@ -35,6 +37,11 @@ class Listener:
         starters = self.model.generate(10)[-2:]
         word_list = self.model.generate(size, starters)
         print(' '.join(word_list))
+
+    def rm_dup(self, seq):
+        seen = set()
+        seen_add = seen.add
+        return [x for x in seq if x not in seen and not seen_add(x)]
     '''
     def conditional_entropy(dist):
         sum = 0

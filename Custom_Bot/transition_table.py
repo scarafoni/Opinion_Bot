@@ -1,15 +1,28 @@
 class Transition_Table:
     '''holds n-gram transitions for a markov chain'''
+    table = {}
+    grams = []
 
     def __init__(self, text_list, grams, n):
-        self.table = dict.fromkeys(grams, dict.fromkeys(grams, 0))
+        self.grams = grams
+        self.gen_dic(grams)
         # populate the table
-        for i in range(len(text_list) - n + 1 - n):
+        for i in range(len(text_list)-n):
             prev_gram = tuple(text_list[i:i+n])
-            next_gram = tuple(text_list[i+n:i+n+n])
-            self.table[prev_gram][next_gram] += 1
+            next_gram = tuple(text_list[i+n-1:i+n+n-1])
+            # print(prev_gram, next_gram)
+            self.table[prev_gram, next_gram] += 1
+        self.print_table()
+        print()
+        # self.normalize_table()
 
-        # normalize the table
+    def gen_dic(self, grams):
+        for gram1 in grams:
+            for gram2 in grams:
+                self.table[gram1, gram2] = 0
+
+    # normalize the table
+    def normalize_table(self):
         for gram1 in self.table:
             c = self.table[gram1]
             tot = float(sum([c[gram2] for gram2 in c]))
@@ -31,9 +44,9 @@ class Transition_Table:
 
     # testing pring function, is usually to big to handle
     def print_table(self):
-        for gram1 in self.table:
-            row_count = 0
-            for gram2 in self.table[gram1]:
-                row_count += self.table[gram1][gram2]
-                print(gram1, gram2, self.table[gram1][gram2])
+        for gram1 in self.grams:
+            for gram2 in self.grams:
+                row_count = 0
+                row_count += self.table[gram1, gram2]
+                print(gram1, gram2, self.table[gram1, gram2])
             print('row count', row_count)
