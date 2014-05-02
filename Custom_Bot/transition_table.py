@@ -23,12 +23,11 @@ class Transition_Table:
 
     # normalize the table
     def normalize_table(self):
-        t = self.table
-        for gram1 in self.grams:
-            row = [t[gram1, gram2] for gram2 in t]
+        for gram in self.grams:
+            row = self.get_row(gram)
             tot = float(sum(row))
-            for gram2 in c:
-                c[gram2] = float(c[gram2] / tot)
+            for col_gram in row:
+                self.table[gram, col_gram] /= tot
 
     def get_row(self, gram):
         return [self.table[gram, gram2] for gram2 in self.grams]
