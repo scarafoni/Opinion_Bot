@@ -15,11 +15,9 @@ class Transition_Table:
             tot = float(sum([c[gram2] for gram2 in c]))
             for gram2 in c:
                 c[gram2] = float(c[gram2] / tot)
-        self.print_table()
 
     def get_row(self, gram):
-        n = self.table[gram]
-        return self.table[gram][n]
+        return self.table[gram]
 
     def get_col(self, gram):
         col = {}
