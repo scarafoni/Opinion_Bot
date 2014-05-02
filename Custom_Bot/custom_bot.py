@@ -82,6 +82,5 @@ class Custom_Bot:
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
-    listener = Custom_Bot(int(sys.argv[2]), story)
-    for i in range(100):
-        listener.error_from_prediction(('I', 'like'), 'apples')
+    custom_bot = Custom_Bot(int(sys.argv[2]), story)
+    print(custom_bot.test_H_from_error(('I', 'like'), 'apples'))
