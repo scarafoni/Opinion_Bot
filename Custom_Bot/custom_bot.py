@@ -51,14 +51,17 @@ class Custom_Bot:
     
     def error_from_prediction(self, hint, answer):
         # TODO: auto compute number of samples needed
-        results = [0, 0]
-        for i in range(100):
+        results = [0.0, 0.0]
+        trials = 100.0
+        for i in range(trials):
             guess = self.predict(hint)
             x = 1 if guess == answer else 0
-            results[x] += 1
-        return results
+            results[x] += 1.0
+        print(results/trials)
+        return results/trials
        
-    def H_from_Err(self,err)
+    # def H_from_Err(self,err)
+
     '''
     def conditional_entropy(gram):
         sum = 0
@@ -70,4 +73,4 @@ if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
     listener = Custom_Bot(int(sys.argv[2]), story)
     for i in range(100):
-        print(listener.predict(('like', 'apples')))
+        listener.error_from_prediction(('like', 'apples'))
