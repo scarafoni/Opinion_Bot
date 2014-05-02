@@ -49,8 +49,8 @@ class Transition_Table:
     # testing pring function, is usually to big to handle
     def print_table(self):
         for gram1 in self.grams:
+            row_count = 0.0
             for gram2 in self.grams:
-                row_count = 0
                 row_count += self.table[gram1, gram2]
                 print(gram1, gram2, self.table[gram1, gram2])
             print('row count', row_count)
