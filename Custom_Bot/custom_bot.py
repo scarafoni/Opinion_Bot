@@ -52,13 +52,15 @@ class Custom_Bot:
     def error_from_prediction(self, hint, answer):
         # TODO: auto compute number of samples needed
         results = [0.0, 0.0]
-        trials = 100.0
-        for i in range(trials):
+        trials = 10.0
+        for i in range(int(trials)):
+            # print(results)
             guess = self.predict(hint)
+            # print(guess, answer)
             x = 1 if guess == answer else 0
             results[x] += 1.0
-        print(results/trials)
-        return results/trials
+        # print([y/trials for y in results])
+        return [y/trials for y in results]
        
     # def H_from_Err(self,err)
 
@@ -73,4 +75,4 @@ if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
     listener = Custom_Bot(int(sys.argv[2]), story)
     for i in range(100):
-        listener.error_from_prediction(('like', 'apples'))
+        listener.error_from_prediction(('I', 'like'), 'apples')
