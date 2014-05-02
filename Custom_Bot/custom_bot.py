@@ -48,6 +48,11 @@ class Custom_Bot:
         row = self.table.get_row_list(gram)
         index = random.choice(len(self.grams), 1, p=row)[0]
         return self.grams[index][self.n-1]
+        
+    # wrapper for below two
+    def test_H_from_error(self, hint, answer):
+        err = self.err_from_prediction(hint, answer)
+        return self.H_from_err(err)
     
     # returns probability of error
     def err_from_prediction(self, hint, answer):
