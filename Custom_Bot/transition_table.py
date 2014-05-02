@@ -25,6 +25,9 @@ class Transition_Table:
             col[self.table[row]] = self.table[row][gram]
         return col
 
+    def get(self, gram1, gram2):
+        return self.table[gram1][gram2]
+
     # testing pring function, is usually to big to handle
     def print_table(self):
         for gram1 in self.table:
