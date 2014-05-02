@@ -2,7 +2,7 @@
 import sys
 from nltk import ngrams
 import string
-from numpy import random
+from numpy import random, log2
 from transition_table import Transition_Table
 
 
@@ -49,7 +49,8 @@ class Custom_Bot:
         index = random.choice(len(self.grams), 1, p=row)[0]
         return self.grams[index][self.n-1]
     
-    def error_from_prediction(self, hint, answer):
+    # returns probability of error
+    def err_from_prediction(self, hint, answer):
         # TODO: auto compute number of samples needed
         results = [0.0, 0.0]
         trials = 10.0
@@ -60,9 +61,12 @@ class Custom_Bot:
             x = 1 if guess == answer else 0
             results[x] += 1.0
         # print([y/trials for y in results])
-        return [y/trials for y in results]
+        return results[0]/trials
        
-    # def H_from_Err(self,err)
+    # use fano's inequality to get maximum bound for entropy
+    def H_from_err(self, err):
+        l = float(len(self.grams))
+        return 1.0 + err*log2(l-1.0)
 
     '''
     def conditional_entropy(gram):
