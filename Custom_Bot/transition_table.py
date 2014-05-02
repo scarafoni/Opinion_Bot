@@ -40,6 +40,9 @@ class Transition_Table:
         vals = [self.table[gram2, gram] for gram2 in self.grams]
         return dict.fromkeys(self.grams, vals)
 
+    def get_col_list(self, gram):
+        return [self.table[gram2, gram] for gram2 in self.grams]
+
     def get(self, gram1, gram2):
         return self.table[gram1, gram2]
 

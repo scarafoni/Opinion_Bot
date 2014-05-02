@@ -45,7 +45,7 @@ class Listener:
     def conditional_entropy(dist):
         sum = 0
         for val in dist:
-           sum += dist[val]* 
+           sum += dist[val]
 
 
 if __name__ == '__main__':
