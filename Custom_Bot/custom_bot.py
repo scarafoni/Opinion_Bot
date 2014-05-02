@@ -22,7 +22,7 @@ class Listener:
         grams = ngrams(self.text_list, n)
         self.grams = [tuple(gram) for gram in grams]
         # transition table
-        self.table = Transition_Table(self.text_list, self.grams, self.n)
+        # self.table = Transition_Table(self.text_list, self.grams, self.n)
 
     def get_row(self, gram):
         return self.table.get_row(gram)
@@ -46,6 +46,3 @@ class Listener:
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
     listener = Listener(int(sys.argv[2]), story)
-    listener.table.print_table()
-    # print(listener.get_col(("to", "the")))
-    # print("testing?", listener.table.get(("to", "the"), ('us', 'hear')))
