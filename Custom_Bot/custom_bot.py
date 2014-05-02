@@ -46,5 +46,6 @@ class Listener:
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
     listener = Listener(int(sys.argv[2]), story)
-    print(listener.get_row(("to", "the")))
-    print("testing?", listener.table[("to", "the")][('us', 'hear')])
+    listener.table.print_table()
+    # print(listener.get_col(("to", "the")))
+    # print("testing?", listener.table.get(("to", "the"), ('us', 'hear')))

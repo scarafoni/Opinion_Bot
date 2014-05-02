@@ -22,7 +22,8 @@ class Transition_Table:
     def get_col(self, gram):
         col = {}
         for row in self.table:
-            col[self.table[row]] = self.table[row][gram]
+            print(row)
+            col[row] = self.table[row][gram]
         return col
 
     def get(self, gram1, gram2):
