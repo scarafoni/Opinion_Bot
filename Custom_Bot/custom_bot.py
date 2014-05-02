@@ -2,10 +2,11 @@
 import sys
 from nltk import ngrams
 import string
+from numpy import random
 from transition_table import Transition_Table
 
 
-class Listener:
+class Custom_Bot:
     '''reads in input from a file and builds a markov table as a result'''
     n = 0
     text_list = []
@@ -42,12 +43,22 @@ class Listener:
         seen_add = seen.add
         return [x for x in seq if x not in seen and not seen_add(x)]
 
-    def conditional_entropy(dist):
+    # predict the next word from a given gram
+    def predict(self, gram):
+        row = self.table.get_row_list(gram)
+        index = random.choice(len(self.grams), 1, p=row)[0]
+        return self.grams[index][self.n-1]
+       
+    def H_from_Err(self,err)
+    '''
+    def conditional_entropy(gram):
         sum = 0
-        for val in dist:
+        for val in gram: 
            sum += dist[val]
-
+    '''
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
-    listener = Listener(int(sys.argv[2]), story)
+    listener = Custom_Bot(int(sys.argv[2]), story)
+    for i in range(100):
+        print(listener.predict(('like', 'apples')))
