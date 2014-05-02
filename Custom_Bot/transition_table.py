@@ -12,7 +12,6 @@ class Transition_Table:
             next_gram = tuple(text_list[i+n-1:i+n+n-1])
             # print(prev_gram, next_gram)
             self.table[prev_gram, next_gram] += 1
-        self.print_table()
         print()
         self.normalize_table()
 
@@ -24,7 +23,7 @@ class Transition_Table:
     # normalize the table
     def normalize_table(self):
         for gram in self.grams:
-            row = self.get_row(gram)
+            row = self.get_row_list(gram)
             tot = float(sum(row))
             for col_gram in self.grams:
                 if tot != 0:
@@ -33,6 +32,9 @@ class Transition_Table:
     def get_row(self, gram):
         vals = [self.table[gram, gram2] for gram2 in self.grams]
         return dict.fromkeys(self.grams, vals)
+
+    def get_row_list(self, gram):
+        return [self.table[gram, gram2] for gram2 in self.grams]
 
     def get_col(self, gram):
         col = {}
