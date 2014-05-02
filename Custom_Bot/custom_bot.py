@@ -48,12 +48,12 @@ class Custom_Bot:
         row = self.table.get_row_list(gram)
         index = random.choice(len(self.grams), 1, p=row)[0]
         return self.grams[index][self.n-1]
-        
+
     # wrapper for below two
     def test_H_from_error(self, hint, answer):
         err = self.err_from_prediction(hint, answer)
         return self.H_from_err(err)
-    
+
     # returns probability of error
     def err_from_prediction(self, hint, answer):
         # TODO: auto compute number of samples needed
@@ -67,12 +67,17 @@ class Custom_Bot:
             results[x] += 1.0
         # print([y/trials for y in results])
         return results[0]/trials
-       
+
     # use fano's inequality to get maximum bound for entropy
     def H_from_err(self, err):
         l = float(len(self.grams))
         return 1.0 + err*log2(l-1.0)
 
+    def run_tests(self, test_name, max_gram):
+        with open('../results/'+file_name+'.csv') as f:
+            print('upper H',file=f)
+            for i in range(max_gram):
+                
     '''
     def conditional_entropy(gram):
         sum = 0
