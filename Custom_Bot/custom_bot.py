@@ -27,6 +27,9 @@ class Listener:
     def get_row(self, gram):
         return self.table.get_row(gram)
 
+    def get_col(self, gram):
+        return self.table.get_col(gram)
+
     # generate a story
     def make_story(self, size):
         starters = self.model.generate(10)[-2:]
