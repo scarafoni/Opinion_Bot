@@ -14,7 +14,7 @@ class Transition_Table:
             self.table[prev_gram, next_gram] += 1
         self.print_table()
         print()
-        # self.normalize_table()
+        self.normalize_table()
 
     def gen_dic(self, grams):
         for gram1 in grams:
@@ -23,14 +23,15 @@ class Transition_Table:
 
     # normalize the table
     def normalize_table(self):
-        for gram1 in self.table:
-            c = self.table[gram1]
-            tot = float(sum([c[gram2] for gram2 in c]))
+        t = self.table
+        for gram1 in self.grams:
+            row = [t[gram1, gram2] for gram2 in t]
+            tot = float(sum(row))
             for gram2 in c:
                 c[gram2] = float(c[gram2] / tot)
 
     def get_row(self, gram):
-        return self.table[gram]
+        return [self.table[gram, gram2] for gram2 in self.grams]
 
     def get_col(self, gram):
         col = {}
