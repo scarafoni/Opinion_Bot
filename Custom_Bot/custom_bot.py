@@ -24,7 +24,6 @@ class Listener:
         self.grams = [tuple(gram) for gram in grams]
         # transition table
         self.table = Transition_Table(self.text_list, self.grams, self.n)
-        self.table.print_table()
 
     def get_row(self, gram):
         return self.table.get_row(gram)
@@ -42,12 +41,11 @@ class Listener:
         seen = set()
         seen_add = seen.add
         return [x for x in seq if x not in seen and not seen_add(x)]
-    '''
+
     def conditional_entropy(dist):
         sum = 0
         for val in dist:
            sum += dist[val]* 
-    '''
 
 
 if __name__ == '__main__':
