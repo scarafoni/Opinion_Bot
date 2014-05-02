@@ -4,7 +4,6 @@ from nltk import ngrams
 import string
 import Transition_Table
 
-
 class Listener:
     '''reads in input from a file and builds a markov table as a result'''
     n = 0

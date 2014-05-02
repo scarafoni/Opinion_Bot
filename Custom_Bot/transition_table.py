@@ -17,6 +17,16 @@ class Transition_Table:
                 c[gram2] = float(c[gram2] / tot)
         self.print_table()
 
+    def get_row(self, gram):
+        n = self.table[gram]
+        return self.table[gram][n]
+
+    def get_col(self, gram):
+        col = {}
+        for row in self.table:
+            col[self.table[row]] = self.table[row][gram]
+        return col
+
     # testing pring function, is usually to big to handle
     def print_table(self):
         for gram1 in self.table:
