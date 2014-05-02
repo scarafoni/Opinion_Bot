@@ -31,7 +31,8 @@ class Transition_Table:
                     self.table[gram, col_gram] /= tot
 
     def get_row(self, gram):
-        return [self.table[gram, gram2] for gram2 in self.grams]
+        vals = [self.table[gram, gram2] for gram2 in self.grams]
+        return dict.fromkeys(self.grams, vals)
 
     def get_col(self, gram):
         col = {}
