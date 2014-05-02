@@ -4,6 +4,7 @@ from nltk import ngrams
 import string
 import Transition_Table
 
+
 class Listener:
     '''reads in input from a file and builds a markov table as a result'''
     n = 0
@@ -23,18 +24,23 @@ class Listener:
         # transition table
         self.table = Transition_Table(self.text_list, self.grams, self.n)
 
+    def get_row(self, gram):
+        return self.table.get_row(gram)
+
     # generate a story
     def make_story(self, size):
         starters = self.model.generate(10)[-2:]
         word_list = self.model.generate(size, starters)
         print(' '.join(word_list))
-
+    '''
     def conditional_entropy(dist):
         sum = 0
         for val in dist:
            sum += dist[val]* 
+    '''
 
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
     listener = Listener(int(sys.argv[2]), story)
+    print(listener.
