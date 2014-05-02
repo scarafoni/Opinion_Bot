@@ -26,8 +26,9 @@ class Transition_Table:
         for gram in self.grams:
             row = self.get_row(gram)
             tot = float(sum(row))
-            for col_gram in row:
-                self.table[gram, col_gram] /= tot
+            for col_gram in self.grams:
+                if tot != 0:
+                    self.table[gram, col_gram] /= tot
 
     def get_row(self, gram):
         return [self.table[gram, gram2] for gram2 in self.grams]
@@ -40,7 +41,7 @@ class Transition_Table:
         return col
 
     def get(self, gram1, gram2):
-        return self.table[gram1][gram2]
+        return self.table[gram1, gram2]
 
     # testing pring function, is usually to big to handle
     def print_table(self):
