@@ -18,7 +18,7 @@ class Custom_Bot:
         text = text.translate(None, string.punctuation)
         text = ' '.join(text.split())
         self.text_list = text.split()
-        # gram number
+        # gram number 
         self.n = n
         # list of grams
         grams = ngrams(self.text_list, n)
@@ -49,7 +49,8 @@ class Custom_Bot:
         # print('gram', gram)
         row = self.table.get_row_list(gram)
         index = random.choice(len(self.grams), 1, p=row)[0]
-        return self.grams[index][self.n-1]
+        # print('predition',self.grams[index][-1])
+        return self.grams[index][-1]
 
     # wrapper for below two
     def test_H_from_err(self, hint, answer):
@@ -64,10 +65,10 @@ class Custom_Bot:
         for i in range(int(trials)):
             # print(results)
             guess = self.predict(hint)
-            # print(guess, answer)
+            print('guess,answer',guess, answer)
             x = 1 if guess == answer else 0
             results[x] += 1.0
-        # print([y/trials for y in results])
+        print([y for y in results])
         return results[0]/trials
 
     # use fano's inequality to get maximum bound for entropy
@@ -85,27 +86,35 @@ def run_tests_exhaustive(story, max_gram):
         result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
         # number of test
-        n = 5
         tests = []
         for i in range(2, max_gram):
+            print(i)
+            test = [str(i)]
             bot = Custom_Bot(i, story)
             for hint in bot.grams:
                 for a in bot.grams:
-                    print('hint', 'answer', hint, a)
                     if bot.table.get(hint, a) == 0:
                         continue
-                    ans = a[:i-2]
+                    ans = a[-1]
+                    if bot.table.get(hint, a) != 0.0:
+                        print('hint', 'answer', hint, ans)
                     # print('i', i)
-                    test = [str(i)]
-                    # TODO- figure out amount to test
+                    # populate the list of tests
                     err = bot.test_H_from_err
-                    test += [err(hint[0:i], ans) for j in range(n)]
+                    # test += [err(hint, ans) for j in range(n)]
+                    test += [err(hint, ans)]
+                    print('test', test)
             tests.append(test)
+            print('test final', test)
         # convert the tests to rows, print
         rows = zip(*tests)
         for row in rows:
             result_csv.writerow(row)
         f.close()
+
+#
+##main
+#
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
@@ -113,4 +122,4 @@ if __name__ == '__main__':
     # story, grams, hint, answer
     hint = ('I', 'like', 'apples', 'I', 'like', 'apples',
             'I', 'like', 'apples', 'I')
-    run_tests_exhaustive(story, 5)
+    run_tests_exhaustive(story, 3)
