@@ -80,22 +80,22 @@ class Custom_Bot:
 #
 
 
-def run_tests(story, max_gram, hint, ans):
+def run_tests_exhaustive(story, max_gram):
     with open('../results/H_from_err.csv', 'wb') as f:
         result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
         # number of test
-        n = 10
+        n = 5
         tests = []
         for i in range(2, max_gram):
-            # print('i', i)
             bot = Custom_Bot(i, story)
-            index = random.random(len(bot.grams)-1)
-            hint = bot.grams[index]
-            ans = bot.table[index+1][i-2]
-            test = [str(i)]
-            # TODO- figure out amount to test
-            test += [bot.test_H_from_err(hint[0:i], ans) for j in range(n)]
+            for hint in bot.grams:
+                for a in bot.grams:
+                    ans = a[:i-2]
+                    # print('i', i)
+                    test = [str(i)]
+                    # TODO- figure out amount to test
+                    test += [bot.test_H_from_err(hint[0:i], ans) for j in range(n)]
             tests.append(test)
         # convert the tests to rows, print
         rows = zip(*tests)
@@ -109,4 +109,4 @@ if __name__ == '__main__':
     # story, grams, hint, answer
     hint = ('I', 'like', 'apples', 'I', 'like', 'apples',
             'I', 'like', 'apples', 'I')
-    run_tests(story, 5, hint, 'apples')
+    run_tests_exhaustive(story, 5)
