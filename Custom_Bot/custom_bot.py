@@ -91,7 +91,7 @@ def run_tests_exhaustive(story, max_gram):
             bot = Custom_Bot(i, story)
             for hint in bot.grams:
                 for a in bot.grams:
-                    if bot.get(hint, a) == 0:
+                    if bot.table.get(hint, a) == 0:
                         continue
                     ans = a[:i-2]
                     # print('i', i)
