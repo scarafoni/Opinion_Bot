@@ -75,7 +75,7 @@ class Custom_Bot:
         return 1.0 + err*log2(l-1.0)
 
 #
-# end class
+# end custom_bot
 #
 
 
@@ -84,26 +84,23 @@ def run_tests(story, max_gram, hint, answer):
         result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
         # number of test
-        n = 10
+        n = 5
         tests = []
         for i in range(2, max_gram):
             print('i', i)
             bot = Custom_Bot(i, story)
             test = [str(i)]
             # TODO- figure out amount to test
-            test += [bot.test_H_from_err(hint, answer) for i in range(n)]
-            test.append(test)
-
+            test += [bot.test_H_from_err(hint, answer) for j in range(n)]
+            tests.append(test)
         # convert the tests to rows, print
-        rows = zip(tests)
+        rows = zip(*tests)
         for row in rows:
-            print('writing')
             result_csv.writerow(row)
-
         f.close()
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
     # custom_bot = Custom_Bot(int(sys.argv[2]), story)
     # story, grams, hint, answer
-    run_tests(story, 2, ('I', 'like'), 'apples')
+    run_tests(story, 4, ('I', 'like'), 'apples')
