@@ -46,6 +46,7 @@ class Custom_Bot:
 
     # predict the next word from a given gram
     def predict(self, gram):
+        print('gram', gram)
         row = self.table.get_row_list(gram)
         index = random.choice(len(self.grams), 1, p=row)[0]
         return self.grams[index][self.n-1]
@@ -79,19 +80,19 @@ class Custom_Bot:
 #
 
 
-def run_tests(story, max_gram, hint, answer):
+def run_tests(story, max_gram, hint, ans):
     with open('../results/H_from_err.csv', 'wb') as f:
         result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
         # number of test
-        n = 5
+        n = 10
         tests = []
         for i in range(2, max_gram):
             print('i', i)
             bot = Custom_Bot(i, story)
             test = [str(i)]
             # TODO- figure out amount to test
-            test += [bot.test_H_from_err(hint, answer) for j in range(n)]
+            test += [bot.test_H_from_err(hint[0:i], ans) for j in range(n)]
             tests.append(test)
         # convert the tests to rows, print
         rows = zip(*tests)
@@ -103,4 +104,6 @@ if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
     # custom_bot = Custom_Bot(int(sys.argv[2]), story)
     # story, grams, hint, answer
-    run_tests(story, 4, ('I', 'like'), 'apples')
+    hint = ('I', 'like', 'apples', 'I', 'like', 'apples',
+            'I', 'like', 'apples', 'I')
+    run_tests(story, 4, hint, 'apples')
