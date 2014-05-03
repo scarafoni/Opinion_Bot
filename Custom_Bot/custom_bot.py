@@ -51,7 +51,7 @@ class Custom_Bot:
         return self.grams[index][self.n-1]
 
     # wrapper for below two
-    def test_H_from_error(self, hint, answer):
+    def test_H_from_err(self, hint, answer):
         err = self.err_from_prediction(hint, answer)
         return self.H_from_err(err)
 
@@ -87,7 +87,7 @@ def run_tests(story, max_gram, hint, answer):
         n = 10
         tests = []
         for i in range(max_gram):
-            bot = Custom_Bot(story, i)
+            bot = Custom_Bot(i, story)
             test = [str(i)]
             # TODO- figure out amount to test
             test += [bot.test_H_from_err(hint, answer) for i in range(n)]
