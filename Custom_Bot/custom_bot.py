@@ -78,8 +78,11 @@ class Custom_Bot:
         with open('../results/'+test_name+'.csv', 'wb') as f:
             result_csv = csv.reader(f, delimeter=',',
                                     quotechar='|')
+            result_csv.writerow(['upper bound H from error'])
             for i in range(max_gram):
-                result_csv.writerow(['upper bound H from error'])
+                test = [str(i)]
+                # TODO- figure out amount to test
+                test += [test_H_from_err(
     '''
     def conditional_entropy(gram):
         sum = 0
