@@ -79,11 +79,12 @@ class Custom_Bot:
 #
 
 
-def run_tests(self, story, hint, answer, max_gram):
+def run_tests(story, max_gram, hint, answer):
     with open('../results/H_from_err.csv', 'wb') as f:
         result_csv = csv.reader(f, delimeter=',',
                                 quotechar='|')
         result_csv.writerow(['upper bound H from error'])
+        # number of test
         n = 10
         tests = []
         for i in range(max_gram):
@@ -103,5 +104,6 @@ def run_tests(self, story, hint, answer, max_gram):
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
-    custom_bot = Custom_Bot(int(sys.argv[2]), story)
-    custom_bot.run_tests(('I', 'like'), 'apples')
+    # custom_bot = Custom_Bot(int(sys.argv[2]), story)
+    # story, grams, hint, answer
+    run_tests(story, 10, ('I', 'like'), 'apples')
