@@ -1,9 +1,11 @@
 #!/usr/bin/python
 import sys
+import csv
 from nltk import ngrams
 import string
 from numpy import random, log2
 from transition_table import Transition_Table
+from __future__ import print_function
 
 
 class Custom_Bot:
@@ -74,9 +76,12 @@ class Custom_Bot:
         return 1.0 + err*log2(l-1.0)
 
     def run_tests(self, test_name, max_gram):
-        with open('../results/'+file_name+'.csv') as f:
-            print('upper H',file=f)
+        with open('../results/'+file_name+'.csv', 'wb') as f:
+            result_csv = csv.reader(
+            print('upper H', file=f)
             for i in range(max_gram):
+
+                print(
                 
     '''
     def conditional_entropy(gram):
