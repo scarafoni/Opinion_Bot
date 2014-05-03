@@ -5,19 +5,25 @@ class Transition_Table:
 
     def __init__(self, text_list, grams, n):
         self.grams = grams
-        self.gen_dic(grams)
+        # self.gen_dic(grams)
+        self.table = dict.fromkeys(grams, {})
         # populate the table
         for i in range(len(text_list)-n):
             prev_gram = tuple(text_list[i:i+n])
             next_gram = tuple(text_list[i+1:i+n+1])
             # print(prev_gram, next_gram)
-            self.table[prev_gram, next_gram] += 1
+            if next_gram in self.table[prev_gram]:
+                self.table[prev_gram][next_gram] += 1
+            else:
+                self.table[prev_gram][next_gram] = 1
         self.normalize_table()
 
+    '''
     def gen_dic(self, grams):
         for gram1 in grams:
-            for gram2 in grams:
-                self.table[gram1, gram2] = 0
+            # for gram2 in grams:
+                # self.table[gram1, gram2] = 0
+    '''
 
     # normalize the table
     def normalize_table(self):
