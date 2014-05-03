@@ -12,7 +12,6 @@ class Transition_Table:
             next_gram = tuple(text_list[i+n-1:i+n+n-1])
             # print(prev_gram, next_gram)
             self.table[prev_gram, next_gram] += 1
-        print()
         self.normalize_table()
 
     def gen_dic(self, grams):

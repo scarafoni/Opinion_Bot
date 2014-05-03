@@ -86,7 +86,8 @@ def run_tests(story, max_gram, hint, answer):
         # number of test
         n = 10
         tests = []
-        for i in range(max_gram):
+        for i in range(2, max_gram):
+            print('i', i)
             bot = Custom_Bot(i, story)
             test = [str(i)]
             # TODO- figure out amount to test
@@ -96,13 +97,13 @@ def run_tests(story, max_gram, hint, answer):
         # convert the tests to rows, print
         rows = zip(tests)
         for row in rows:
+            print('writing')
             result_csv.writerow(row)
 
-        result_csv.close()
         f.close()
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
     # custom_bot = Custom_Bot(int(sys.argv[2]), story)
     # story, grams, hint, answer
-    run_tests(story, 10, ('I', 'like'), 'apples')
+    run_tests(story, 2, ('I', 'like'), 'apples')
