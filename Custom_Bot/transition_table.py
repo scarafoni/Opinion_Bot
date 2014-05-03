@@ -9,7 +9,7 @@ class Transition_Table:
         # populate the table
         for i in range(len(text_list)-n):
             prev_gram = tuple(text_list[i:i+n])
-            next_gram = tuple(text_list[i+n-1:i+n+n-1])
+            next_gram = tuple(text_list[i+1:i+n+1])
             # print(prev_gram, next_gram)
             self.table[prev_gram, next_gram] += 1
         self.normalize_table()
