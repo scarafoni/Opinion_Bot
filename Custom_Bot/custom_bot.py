@@ -46,7 +46,7 @@ class Custom_Bot:
 
     # predict the next word from a given gram
     def predict(self, gram):
-        print('gram', gram)
+        # print('gram', gram)
         row = self.table.get_row_list(gram)
         index = random.choice(len(self.grams), 1, p=row)[0]
         return self.grams[index][self.n-1]
@@ -88,7 +88,7 @@ def run_tests(story, max_gram, hint, ans):
         n = 10
         tests = []
         for i in range(2, max_gram):
-            print('i', i)
+            # print('i', i)
             bot = Custom_Bot(i, story)
             test = [str(i)]
             # TODO- figure out amount to test
@@ -106,4 +106,4 @@ if __name__ == '__main__':
     # story, grams, hint, answer
     hint = ('I', 'like', 'apples', 'I', 'like', 'apples',
             'I', 'like', 'apples', 'I')
-    run_tests(story, 4, hint, 'apples')
+    run_tests(story, 5, hint, 'apples')
