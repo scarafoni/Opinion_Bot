@@ -81,8 +81,7 @@ class Custom_Bot:
 
 def run_tests(story, max_gram, hint, answer):
     with open('../results/H_from_err.csv', 'wb') as f:
-        result_csv = csv.reader(f, delimeter=',',
-                                quotechar='|')
+        result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
         # number of test
         n = 10
