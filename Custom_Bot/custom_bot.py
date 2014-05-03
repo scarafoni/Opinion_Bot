@@ -90,6 +90,9 @@ def run_tests(story, max_gram, hint, ans):
         for i in range(2, max_gram):
             # print('i', i)
             bot = Custom_Bot(i, story)
+            index = random.random(len(bot.grams)-1)
+            hint = bot.grams[index]
+            ans = bot.table[index+1][i-2]
             test = [str(i)]
             # TODO- figure out amount to test
             test += [bot.test_H_from_err(hint[0:i], ans) for j in range(n)]
