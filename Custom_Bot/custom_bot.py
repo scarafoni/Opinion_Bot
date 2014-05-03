@@ -90,14 +90,17 @@ def run_tests_exhaustive(story, max_gram):
         for i in range(2, max_gram):
             bot = Custom_Bot(i, story)
             for hint in bot.grams:
+                print('hint', hint)
                 for a in bot.grams:
+                    print('answer', a)
                     if bot.table.get(hint, a) == 0:
                         continue
                     ans = a[:i-2]
                     # print('i', i)
                     test = [str(i)]
                     # TODO- figure out amount to test
-                    test += [bot.test_H_from_err(hint[0:i], ans) for j in range(n)]
+                    err = bot.test_H_from_err
+                    test += [err(hint[0:i], ans) for j in range(n)]
             tests.append(test)
         # convert the tests to rows, print
         rows = zip(*tests)
