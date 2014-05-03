@@ -74,23 +74,34 @@ class Custom_Bot:
         l = float(len(self.grams))
         return 1.0 + err*log2(l-1.0)
 
-    def run_tests(self, test_name, max_gram):
-        with open('../results/'+test_name+'.csv', 'wb') as f:
-            result_csv = csv.reader(f, delimeter=',',
-                                    quotechar='|')
-            result_csv.writerow(['upper bound H from error'])
-            for i in range(max_gram):
-                test = [str(i)]
-                # TODO- figure out amount to test
-                test += [test_H_from_err(
-    '''
-    def conditional_entropy(gram):
-        sum = 0
-        for val in gram: 
-           sum += dist[val]
-    '''
+#
+# end class
+#
+
+
+def run_tests(self, story, hint, answer, max_gram):
+    with open('../results/H_from_err.csv', 'wb') as f:
+        result_csv = csv.reader(f, delimeter=',',
+                                quotechar='|')
+        result_csv.writerow(['upper bound H from error'])
+        n = 10
+        tests = []
+        for i in range(max_gram):
+            bot = Custom_Bot(story, i)
+            test = [str(i)]
+            # TODO- figure out amount to test
+            test += [bot.test_H_from_err(hint, answer) for i in range(n)]
+            test.append(test)
+
+        # convert the tests to rows, print
+        rows = zip(tests)
+        for row in rows:
+            result_csv.writerow(row)
+
+        result_csv.close()
+        f.close()
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
     custom_bot = Custom_Bot(int(sys.argv[2]), story)
-    print(custom_bot.test_H_from_error(('I', 'like'), 'apples'))
+    custom_bot.run_tests(('I', 'like'), 'apples')
