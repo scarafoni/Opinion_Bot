@@ -6,16 +6,18 @@ class Transition_Table:
     def __init__(self, text_list, grams, n):
         self.grams = grams
         # self.gen_dic(grams)
-        self.table = dict.fromkeys(grams, {})
+        # self.table = dict.fromkeys(grams, {})
         # populate the table
         for i in range(len(text_list)-n):
             prev_gram = tuple(text_list[i:i+n])
             next_gram = tuple(text_list[i+1:i+n+1])
-            # print(prev_gram, next_gram)
+            print(prev_gram, next_gram)
             if next_gram in self.table[prev_gram]:
-                self.table[prev_gram][next_gram] += 1
+                self.table[prev_gram, next_gram] += 1
             else:
-                self.table[prev_gram][next_gram] = 1
+                self.table[prev_gram, next_gram] = 1
+            print('row after', self.table)
+            print()
         self.normalize_table()
 
     '''
@@ -28,13 +30,15 @@ class Transition_Table:
     # normalize the table
     def normalize_table(self):
         for gram in self.grams:
-            row = self.get_row_list(gram)
-            tot = float(sum(row))
+            row = self.get_row(gram)
+            tot = float(sum(row[col] for col in row))
+            print(gram)
+            print(row)
             print(len(row))
             for col_gram in row:
                 if tot != 0:
-                    col_gram /= tot
-            print(row)
+                    row[col_gram] /= tot
+            # print(row)
 
     def get_row(self, gram):
         return self.table[gram]
@@ -54,9 +58,9 @@ class Transition_Table:
 
     # testing pring function, is usually to big to handle
     def print_table(self):
-        for gram1 in self.grams:
+        for gram1 in self.table:
             row_count = 0.0
-            for gram2 in self.grams:
+            for gram2 in self.table[gram1]:
                 row_count += self.table[gram1, gram2]
                 print(gram1, gram2, self.table[gram1, gram2])
             print('row count', row_count)
