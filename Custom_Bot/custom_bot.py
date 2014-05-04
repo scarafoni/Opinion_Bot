@@ -47,8 +47,9 @@ class Custom_Bot:
     # predict the next word from a given gram
     def predict(self, gram):
         # print('gram', gram)
-        row = self.table.get_row_list(gram)
-        index = random.choice(len(self.grams), 1, p=row)[0]
+        row_probs = [val for key, val in self.table.get_row(gram).iteritems()]
+        print('row probs', row_probs)
+        index = random.choice(len(row_probs), 1, p=row_probs)[0]
         # print('predition',self.grams[index][-1])
         return self.grams[index][-1]
 
@@ -92,18 +93,14 @@ def run_tests_exhaustive(story, max_gram):
             test = [str(i)]
             bot = Custom_Bot(i, story)
             for hint in bot.grams:
-                for a in bot.grams:
-                    if bot.table.get(hint, a) == 0:
-                        continue
-                    ans = a[-1]
-                    '''
+                for a in bot.table.get_row(hint):
+                    a = a[-1]
                     if bot.table.get(hint, a) != 0.0:
-                        print('hint', 'answer', hint, ans)
-                    '''
+                        print('hint', 'answer', hint, a)
                     # populate the list of tests
                     err = bot.test_H_from_err
                     # test += [err(hint, ans) for j in range(n)]
-                    test += [err(hint, ans)]
+                    test += [err(hint, a)]
                     # print('test', test)
             tests.append(test)
             print('test final', test)
