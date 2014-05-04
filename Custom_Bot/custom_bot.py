@@ -47,16 +47,22 @@ class Custom_Bot:
     # predict the next word from a given gram
     def predict(self, gram):
         # print('gram', gram)
+        row = [key for key, val in self.table.get_row(gram).iteritems()]
         row_probs = [val for key, val in self.table.get_row(gram).iteritems()]
-        print('row probs', row_probs)
-        index = random.choice(len(row_probs), 1, p=row_probs)[0]
-        # print('predition',self.grams[index][-1])
-        return self.grams[index][-1]
+        # print('row probs', row_probs)
+        index = random.choice(len(row), 1, p=row_probs)[0]
+        # print('prediction', row[index][-1])
+        return row[index][-1][-1]
 
     # wrapper for below two
     def test_H_from_err(self, hint, answer):
         err = self.err_from_prediction(hint, answer)
         return self.H_from_err(err)
+
+    # use fano's inequality to get maximum bound for entropy
+    def H_from_err(self, err):
+        l = float(len(self.grams))
+        return 1.0 + err*log2(l-1.0)
 
     # returns probability of error
     def err_from_prediction(self, hint, answer):
@@ -64,18 +70,13 @@ class Custom_Bot:
         results = [0.0, 0.0]
         trials = 10.0
         for i in range(int(trials)):
-            # print(results)
+            print('hint, answer', hint, answer)
             guess = self.predict(hint)
-            # print('guess, answer', guess, answer)
+            print('guess', guess)
             x = 1 if guess == answer else 0
             results[x] += 1.0
         # print([y for y in results])
         return results[0]/trials
-
-    # use fano's inequality to get maximum bound for entropy
-    def H_from_err(self, err):
-        l = float(len(self.grams))
-        return 1.0 + err*log2(l-1.0)
 
 #
 # end custom_bot
@@ -96,11 +97,11 @@ def run_tests_exhaustive(story, max_gram):
                 for a in bot.table.get_row(hint):
                     a = a[-1]
                     if bot.table.get(hint, a) != 0.0:
-                        print('hint', 'answer', hint, a)
+                        print('1', 'hint', 'answer', hint, a)
                     # populate the list of tests
                     err = bot.test_H_from_err
                     # test += [err(hint, ans) for j in range(n)]
-                    test += [err(hint, a)]
+                    test += [err(hint, a[-1])]
                     # print('test', test)
             tests.append(test)
             print('test final', test)
