@@ -30,13 +30,14 @@ class Transition_Table:
         for gram in self.grams:
             row = self.get_row_list(gram)
             tot = float(sum(row))
-            for col_gram in self.grams:
+            print(len(row))
+            for col_gram in row:
                 if tot != 0:
-                    self.table[gram, col_gram] /= tot
+                    col_gram /= tot
+            print(row)
 
     def get_row(self, gram):
-        vals = [self.table[gram, gram2] for gram2 in self.grams]
-        return dict.fromkeys(self.grams, vals)
+        return self.table[gram]
 
     def get_row_list(self, gram):
         return [self.table[gram, gram2] for gram2 in self.grams]
