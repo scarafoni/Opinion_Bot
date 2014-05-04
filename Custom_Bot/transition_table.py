@@ -26,7 +26,7 @@ class Transition_Table:
             for key, val in row.iteritems():
                 if tot != 0:
                     self.table[key] /= tot
-            print(self.get_row(gram))
+            # print(self.get_row(gram))
 
     # returns KEYS for prev/next gram combos in a rowj
     def get_row(self, gram):

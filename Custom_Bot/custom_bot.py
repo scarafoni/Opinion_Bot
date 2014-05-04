@@ -70,9 +70,9 @@ class Custom_Bot:
         results = [0.0, 0.0]
         trials = 10.0
         for i in range(int(trials)):
-            print('hint, answer', hint, answer)
+            # print('hint, answer', hint, answer)
             guess = self.predict(hint)
-            print('guess', guess)
+            # print('guess', guess)
             x = 1 if guess == answer else 0
             results[x] += 1.0
         # print([y for y in results])
@@ -93,11 +93,11 @@ def run_tests_exhaustive(story, max_gram):
             print(i)
             test = [str(i)]
             bot = Custom_Bot(i, story)
+            print('grams', bot.grams)
             for hint in bot.grams:
                 for a in bot.table.get_row(hint):
                     a = a[-1]
-                    if bot.table.get(hint, a) != 0.0:
-                        print('1', 'hint', 'answer', hint, a)
+                    print('1', 'hint', 'answer', hint, a[-1])
                     # populate the list of tests
                     err = bot.test_H_from_err
                     # test += [err(hint, ans) for j in range(n)]
