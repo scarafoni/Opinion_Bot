@@ -11,22 +11,26 @@ class Transition_Table:
         for i in range(len(text_list)-n):
             prev_gram = tuple(text_list[i:i+n])
             next_gram = tuple(text_list[i+1:i+n+1])
-            # print(prev_gram, next_gram)
+            print(prev_gram, next_gram)
             if (prev_gram, next_gram) in self.table:
                 self.table[prev_gram, next_gram] += 1
             else:
                 self.table[prev_gram, next_gram] = 1
+        print('done')
         self.normalize_table()
 
     # normalize the table
     def normalize_table(self):
+        print('normalizing')
         for gram in self.grams:
             row = self.get_row(gram)
             tot = float(sum(row[col] for col in row))
             for key, val in row.iteritems():
                 if tot != 0:
                     self.table[key] /= tot
+            # print('finished normalizing row')
             # print(self.get_row(gram))
+        print('done normalizing')
 
     # returns KEYS for prev/next gram combos in a rowj
     def get_row(self, gram):

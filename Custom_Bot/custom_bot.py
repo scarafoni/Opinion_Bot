@@ -66,7 +66,11 @@ class Custom_Bot:
 
     # returns probability of error
     def err_from_prediction(self, hint, answer):
-        # TODO: auto compute number of samples needed
+        # if there's only one gram to transition to then ignore
+        row = [key for key, val in self.table.get_row(hint).iteritems()]
+        if len(row) == 1: 
+            print('only one option on',hint)
+            return 1
         results = [0.0, 0.0]
         trials = 10.0
         for i in range(int(trials)):
@@ -89,20 +93,26 @@ def run_tests_exhaustive(story, max_gram):
         result_csv.writerow(['upper bound H from error'])
         # number of test
         tests = []
-        for i in range(2, max_gram):
+        for i in range(5, max_gram):
             print(i)
             test = [str(i)]
             bot = Custom_Bot(i, story)
-            print('grams', bot.grams)
+            # print('grams', bot.grams)
+            i = 0
+            tsize = len(bot.grams)
             for hint in bot.grams:
+                # print('on hint', hint)
+                if not i % 10:
+                    print('on gram '+str(i)+' of '+str(tsize))
                 for a in bot.table.get_row(hint):
                     a = a[-1]
-                    print('1', 'hint', 'answer', hint, a[-1])
+                    # print('1', 'hint', 'answer', hint, a[-1])
                     # populate the list of tests
                     err = bot.test_H_from_err
                     # test += [err(hint, ans) for j in range(n)]
                     test += [err(hint, a[-1])]
                     # print('test', test)
+                i += 1
             tests.append(test)
             print('test final', test)
         # convert the tests to rows, print
@@ -121,4 +131,4 @@ if __name__ == '__main__':
     # story, grams, hint, answer
     hint = ('I', 'like', 'apples', 'I', 'like', 'apples',
             'I', 'like', 'apples', 'I')
-    run_tests_exhaustive(story, 5)
+    run_tests_exhaustive(story, 11)
