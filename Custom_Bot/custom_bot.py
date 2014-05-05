@@ -69,7 +69,7 @@ class Custom_Bot:
         # if there's only one gram to transition to then ignore
         row = [key for key, val in self.table.get_row(hint).iteritems()]
         if len(row) == 1: 
-            print('only one option on',hint)
+            # print('only one option on',hint)
             return 1
         results = [0.0, 0.0]
         trials = 10.0
