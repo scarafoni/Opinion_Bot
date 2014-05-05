@@ -116,8 +116,8 @@ def run_tests_exhaustive(story, max_gram):
             tests.append(test)
             print('test final', test)
         # convert the tests to rows, print
-        rows = zip(*tests)
-        for row in rows:
+        # rows = zip(*tests)
+        for row in tests:
             result_csv.writerow(row)
         f.close()
 
