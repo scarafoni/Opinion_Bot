@@ -56,21 +56,24 @@ class Custom_Bot:
 
     # wrapper for below two
     def test_H_from_err(self, hint, answer):
-        err = self.err_from_prediction(hint, answer)
-        return self.H_from_err(err)
+        row = [key for key, val in self.table.get_row(hint).iteritems()]
+        l = float(len(row))
+        err = self.err_from_prediction(hint, answer, l)
+        return self.H_from_err(err, l)
 
     # use fano's inequality to get maximum bound for entropy
-    def H_from_err(self, err):
-        l = float(len(self.grams))
-        return 1.0 + err*log2(l-1.0)
+    def H_from_err(self, err,l):
+        row = [key for key, val in self.table.get_row(hint).iteritems()]
+        print('err',err)
+        return 1.0 + err*log2(l)
 
     # returns probability of error
-    def err_from_prediction(self, hint, answer):
+    def err_from_prediction(self, hint, answer, l):
         # if there's only one gram to transition to then ignore
-        row = [key for key, val in self.table.get_row(hint).iteritems()]
-        if len(row) == 1: 
-            # print('only one option on',hint)
-            return 1
+        # row = [key for key, val in self.table.get_row(hint).iteritems()]
+        if l == 1: 
+            print('only one option on',hint)
+            return 0
         results = [0.0, 0.0]
         trials = 10.0
         for i in range(int(trials)):
@@ -93,7 +96,7 @@ def run_tests_exhaustive(story, max_gram):
         result_csv.writerow(['upper bound H from error'])
         # number of test
         tests = []
-        for i in range(5, max_gram):
+        for i in range(2, max_gram):
             print(i)
             test = [str(i)]
             bot = Custom_Bot(i, story)
