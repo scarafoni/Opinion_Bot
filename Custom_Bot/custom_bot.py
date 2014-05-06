@@ -69,7 +69,7 @@ class Custom_Bot:
     def H_from_err(self, err, l):
         # row = [key for key, val in self.table.get_row(hint).iteritems()]
         # print('err',err)
-        he = -1.0 * (log2(err) - ((1.0-err)*log2(1.0-err)))
+        he = (-1.0*log2(err)) - ((1.0-err)*log2(1.0-err))
         return he + (err*log2(l)-1)
         # return 1.0 + err*log2(l)
 
@@ -98,7 +98,7 @@ class Custom_Bot:
             mu = self.table.gram_probs[gram]
             for key, val in row.iteritems():
                 # print('key, val', key, val)
-                tot += mu * val * log2(val)
+                tot += (mu * val * log2(val))
         return -1.0 * tot
 #
 # end custom_bot
