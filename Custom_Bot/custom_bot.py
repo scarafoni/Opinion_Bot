@@ -88,6 +88,9 @@ class Custom_Bot:
             results[x] += 1.0
         # print([y for y in results])
         return results[0]/trials
+    
+    def H_from_table(self):
+        print('holder')
 
 #
 # end custom_bot
@@ -137,8 +140,7 @@ if __name__ == '__main__':
     save_file = sys.argv[2]
     min_gram = int(sys.argv[3])
     max_gram = int(sys.argv[4])
-    # custom_bot = Custom_Bot(int(sys.argv[2]), story)
+    custom_bot = Custom_Bot(int(sys.argv[2]), story)
+    print(custom_bot.gram_probs)
     # story, grams, hint, answer
-    hint = ('I', 'like', 'apples', 'I', 'like', 'apples',
-            'I', 'like', 'apples', 'I')
-    run_tests_exhaustive(story,save_file, min_gram, max_gram)
+    # run_tests_exhaustive(story, save_file, min_gram, max_gram)
