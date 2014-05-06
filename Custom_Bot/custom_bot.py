@@ -24,7 +24,7 @@ class Custom_Bot:
         grams = ngrams(self.text_list, n)
         grams_nd = self.rm_dup(grams)
         self.grams = {tuple(gram): float(grams.count(gram)) for gram in grams_nd}
-        print('grams dic', self.grams)
+        # print('grams dic', self.grams)
         # transition table
         self.table = Transition_Table(self.text_list, self.grams,
                                       self.n, len(grams))
@@ -95,8 +95,8 @@ class Custom_Bot:
             row = self.table.get_row(gram)
             mu = self.table.gram_probs[gram]
             for key, val in row.iteritems():
-                print('key, val', key, val)
-                tot += mu * self.table[val] * log2(self.table[val])
+                # print('key, val', key, val)
+                tot += mu * val * log2(val)
         return -1.0 * tot
 #
 # end custom_bot
@@ -107,9 +107,11 @@ def test_H_from_table(story, save_file, min_gram, max_gram):
     with open('../results/'+save_file, 'wb') as f:
         result_csv = csv.writer(f)
         result_csv.writerow(['H from table'])
-        for i in range(min_gram, max_gram):
+        for i in range(min_gram, max_gram+1):
             bot = Custom_Bot(i, story)
-            result_csv.writerow(bot.H_from_table())
+            print(bot.H_from_table())
+            result_csv.writerow([str(bot.H_from_table())])
+        f.close()
 
 
 def run_tests_exhaustive(story, save_file, min_gram, max_gram):
