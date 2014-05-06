@@ -109,8 +109,8 @@ def test_H_from_table(story, save_file, min_gram, max_gram):
         result_csv.writerow(['H from table'])
         for i in range(min_gram, max_gram+1):
             bot = Custom_Bot(i, story)
-            print(bot.H_from_table())
-            result_csv.writerow([str(bot.H_from_table())])
+            x = bot.H_from_table())
+            result_csv.writerow([str(x)])
         f.close()
 
 
