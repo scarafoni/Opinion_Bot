@@ -26,9 +26,11 @@ class Transition_Table:
     # normalize the table
     def normalize_table(self):
         print('normalizing')
+        '''
         for key, val in self.gram_probs.iteritems():
             self.gram_probs[key] /= self.text_size
         print('done normalizing total counts')
+        '''
 
         for gram in self.grams:
             row = self.get_row(gram)

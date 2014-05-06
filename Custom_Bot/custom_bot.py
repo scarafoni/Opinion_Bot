@@ -161,5 +161,5 @@ if __name__ == '__main__':
     min_gram = int(sys.argv[3])
     max_gram = int(sys.argv[4])
     # story, grams, hint, answer
-    test_H_from_table(story, save_file, min_gram, max_gram)
-    # run_tests_exhaustive(story, save_file, min_gram, max_gram)
+    # test_H_from_table(story, save_file, min_gram, max_gram)
+    run_tests_exhaustive(story, save_file, min_gram, max_gram)
