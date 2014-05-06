@@ -70,7 +70,8 @@ class Custom_Bot:
         # row = [key for key, val in self.table.get_row(hint).iteritems()]
         # print('err',err)
         he = (-1.0*log2(err)) - ((1.0-err)*log2(1.0-err))
-        return he + (err*log2(l)-1)
+        # print('he',he)
+        return he + (err*log2(l)-1) if err > 0.0 else 0.0
         # return 1.0 + err*log2(l)
 
     # returns probability of error
