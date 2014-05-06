@@ -97,14 +97,17 @@ class Custom_Bot:
             for key, val in row.iteritems():
                 print('key, val', key, val)
                 tot += mu * self.table[val] * log2(self.table[val])
-        return tot
+        return -1.0 * tot
 
 
 #
 # end custom_bot
 #
 
-
+def H_form_table_tests(story, save file, min_gram, max_gram):
+    with open('../results/'+save_file, 'wb') as f:
+        result_csv = csv.writer(f)
+        result_csv.writerow(['upper bound H from error'])
 def run_tests_exhaustive(story, save_file, min_gram, max_gram):
     with open('../results/'+save_file, 'wb') as f:
         result_csv = csv.writer(f)
