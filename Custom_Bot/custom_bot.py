@@ -11,7 +11,7 @@ class Custom_Bot:
     '''reads in input from a file and builds a markov table as a result'''
     n = 0
     text_list = []
-    grams = []
+    grams = {}
 
     def __init__(self, n, text):
         # text corpus as list of words
@@ -22,10 +22,12 @@ class Custom_Bot:
         self.n = n
         # list of grams
         grams = ngrams(self.text_list, n)
-        grams = self.rm_dup(grams)
-        self.grams = [tuple(gram) for gram in grams]
+        grams_nd = self.rm_dup(grams)
+        self.grams = {tuple(gram): float(grams.count(gram)) for gram in grams_nd}
+        print('grams dic', self.grams)
         # transition table
-        self.table = Transition_Table(self.text_list, self.grams, self.n)
+        self.table = Transition_Table(self.text_list, self.grams,
+                                      self.n, len(grams))
 
     def get_row(self, gram):
         return self.table.get_row(gram)
@@ -60,11 +62,11 @@ class Custom_Bot:
         l = float(len(row))
         # print('hint','answer',hint,answer)
         # print(self.table.get(hint,answer))
-        err = 1 - self.table.get(hint,answer) #self.err_from_prediction(hint, answer, l)
+        err = 1 - self.table.get(hint, answer)
         return self.H_from_err(err, l)
 
     # use fano's inequality to get maximum bound for entropy
-    def H_from_err(self, err,l):
+    def H_from_err(self, err, l):
         # row = [key for key, val in self.table.get_row(hint).iteritems()]
         # print('err',err)
         return 1.0 + err*log2(l)
@@ -73,7 +75,7 @@ class Custom_Bot:
     def err_from_prediction(self, hint, answer, l):
         # if there's only one gram to transition to then ignore
         # row = [key for key, val in self.table.get_row(hint).iteritems()]
-        if l == 1: 
+        if l == 1:
             # print('only one option on',hint)
             return 0
         results = [0.0, 0.0]

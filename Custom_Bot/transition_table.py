@@ -2,9 +2,13 @@ class Transition_Table:
     '''holds n-gram transitions for a markov chain'''
     table = {}
     grams = []
+    gram_probs = {}
+    text_size = 0.0
 
-    def __init__(self, text_list, grams, n):
-        self.grams = grams
+    def __init__(self, text_list, grams, n, text_size):
+        self.grams = grams.keys()
+        self.gram_probs = grams
+        self.text_size = float(text_size)
         # self.gen_dic(grams)
         # self.table = dict.fromkeys(grams, {})
         # populate the table
@@ -22,9 +26,14 @@ class Transition_Table:
     # normalize the table
     def normalize_table(self):
         print('normalizing')
+        for key, val in self.grams_probs:
+            val /= self.text_size
+        print('done normalizing total counts')
+
         for gram in self.grams:
             row = self.get_row(gram)
             tot = float(sum(row[col] for col in row))
+            # calculate the total instances of this gram
             for key, val in row.iteritems():
                 if tot != 0:
                     self.table[key] /= tot
