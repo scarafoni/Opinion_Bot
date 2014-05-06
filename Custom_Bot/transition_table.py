@@ -11,12 +11,12 @@ class Transition_Table:
         for i in range(len(text_list)-n):
             prev_gram = tuple(text_list[i:i+n])
             next_gram = tuple(text_list[i+1:i+n+1])
-            print(prev_gram, next_gram)
+            # print(prev_gram, next_gram)
             if (prev_gram, next_gram) in self.table:
                 self.table[prev_gram, next_gram] += 1
             else:
                 self.table[prev_gram, next_gram] = 1
-        print('done')
+        print('done entering grams')
         self.normalize_table()
 
     # normalize the table

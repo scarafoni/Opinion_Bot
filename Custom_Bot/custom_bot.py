@@ -64,7 +64,7 @@ class Custom_Bot:
     # use fano's inequality to get maximum bound for entropy
     def H_from_err(self, err,l):
         row = [key for key, val in self.table.get_row(hint).iteritems()]
-        print('err',err)
+        # print('err',err)
         return 1.0 + err*log2(l)
 
     # returns probability of error
@@ -72,7 +72,7 @@ class Custom_Bot:
         # if there's only one gram to transition to then ignore
         # row = [key for key, val in self.table.get_row(hint).iteritems()]
         if l == 1: 
-            print('only one option on',hint)
+            # print('only one option on',hint)
             return 0
         results = [0.0, 0.0]
         trials = 10.0
@@ -90,14 +90,14 @@ class Custom_Bot:
 #
 
 
-def run_tests_exhaustive(story, max_gram):
-    with open('../results/H_from_err.csv', 'wb') as f:
+def run_tests_exhaustive(story, save_file, min_gram, max_gram):
+    with open('../results/'+save_file+'.csv', 'wb') as f:
         result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
         # number of test
         tests = []
-        for i in range(2, max_gram):
-            print(i)
+        for i in range(min_gram, max_gram+1):
+            # print(i)
             test = [str(i)]
             bot = Custom_Bot(i, story)
             # print('grams', bot.grams)
@@ -130,8 +130,11 @@ def run_tests_exhaustive(story, max_gram):
 
 if __name__ == '__main__':
     story = open('../texts/'+sys.argv[1], 'r').read()
+    save_file = sys.argv[2]
+    min_gram = int(sys.argv[3])
+    max_gram = int(sys.argv[4])
     # custom_bot = Custom_Bot(int(sys.argv[2]), story)
     # story, grams, hint, answer
     hint = ('I', 'like', 'apples', 'I', 'like', 'apples',
             'I', 'like', 'apples', 'I')
-    run_tests_exhaustive(story, 11)
+    run_tests_exhaustive(story,save_file, min_gram, max_gram)
