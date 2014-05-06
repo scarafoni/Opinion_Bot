@@ -69,7 +69,9 @@ class Custom_Bot:
     def H_from_err(self, err, l):
         # row = [key for key, val in self.table.get_row(hint).iteritems()]
         # print('err',err)
-        return 1.0 + err*log2(l)
+        he = -1.0 * (log2(err) - ((1.0-err)*log2(1.0-err)))
+        return he + (err*log2(l)-1)
+        # return 1.0 + err*log2(l)
 
     # returns probability of error
     def err_from_prediction(self, hint, answer, l):
@@ -109,7 +111,8 @@ def test_H_from_table(story, save_file, min_gram, max_gram):
         result_csv.writerow(['H from table'])
         for i in range(min_gram, max_gram+1):
             bot = Custom_Bot(i, story)
-            x = bot.H_from_table())
+            x = bot.H_from_table()
+            print(x)
             result_csv.writerow([str(x)])
         f.close()
 
