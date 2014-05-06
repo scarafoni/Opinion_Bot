@@ -88,7 +88,7 @@ class Custom_Bot:
             results[x] += 1.0
         # print([y for y in results])
         return results[0]/trials
-    
+
     def H_from_table(self):
         tot = 0.0
         for gram in self.table.grams:
@@ -98,16 +98,20 @@ class Custom_Bot:
                 print('key, val', key, val)
                 tot += mu * self.table[val] * log2(self.table[val])
         return -1.0 * tot
-
-
 #
 # end custom_bot
 #
 
-def H_form_table_tests(story, save file, min_gram, max_gram):
+
+def test_H_from_table(story, save_file, min_gram, max_gram):
     with open('../results/'+save_file, 'wb') as f:
         result_csv = csv.writer(f)
-        result_csv.writerow(['upper bound H from error'])
+        result_csv.writerow(['H from table'])
+        for i in range(min_gram, max_gram):
+            bot = Custom_Bot(i, story)
+            result_csv.writerow(bot.H_from_table())
+
+
 def run_tests_exhaustive(story, save_file, min_gram, max_gram):
     with open('../results/'+save_file, 'wb') as f:
         result_csv = csv.writer(f)
@@ -151,8 +155,6 @@ if __name__ == '__main__':
     save_file = sys.argv[2]
     min_gram = int(sys.argv[3])
     max_gram = int(sys.argv[4])
-    custom_bot = Custom_Bot(min_gram, story)
-    print(custom_bot.table.gram_probs)
-    custom_bot.H_from_table()
     # story, grams, hint, answer
+    test_H_from_table(story, save_file, min_gram, max_gram)
     # run_tests_exhaustive(story, save_file, min_gram, max_gram)
