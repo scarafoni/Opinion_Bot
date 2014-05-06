@@ -58,12 +58,14 @@ class Custom_Bot:
     def test_H_from_err(self, hint, answer):
         row = [key for key, val in self.table.get_row(hint).iteritems()]
         l = float(len(row))
-        err = self.err_from_prediction(hint, answer, l)
+        # print('hint','answer',hint,answer)
+        # print(self.table.get(hint,answer))
+        err = 1 - self.table.get(hint,answer) #self.err_from_prediction(hint, answer, l)
         return self.H_from_err(err, l)
 
     # use fano's inequality to get maximum bound for entropy
     def H_from_err(self, err,l):
-        row = [key for key, val in self.table.get_row(hint).iteritems()]
+        # row = [key for key, val in self.table.get_row(hint).iteritems()]
         # print('err',err)
         return 1.0 + err*log2(l)
 
@@ -91,7 +93,7 @@ class Custom_Bot:
 
 
 def run_tests_exhaustive(story, save_file, min_gram, max_gram):
-    with open('../results/'+save_file+'.csv', 'wb') as f:
+    with open('../results/'+save_file, 'wb') as f:
         result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
         # number of test
@@ -113,7 +115,7 @@ def run_tests_exhaustive(story, save_file, min_gram, max_gram):
                     # populate the list of tests
                     err = bot.test_H_from_err
                     # test += [err(hint, ans) for j in range(n)]
-                    test += [err(hint, a[-1])]
+                    test += [err(hint, a)]
                     # print('test', test)
                 i += 1
             tests.append(test)
