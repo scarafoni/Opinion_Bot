@@ -152,6 +152,39 @@ def run_tests_exhaustive(story, save_file, min_gram, max_gram):
             result_csv.writerow(row)
         f.close()
 
+
+def run_tests_mc(story, save_file, min_gram, max_gram):
+    with open('../results/'+save_file, 'wb') as f:
+        result_csv = csv.writer(f)
+        result_csv.writerow(['upper bound H from error'])
+        # number of test
+        tests = []
+        for i in range(min_gram, max_gram+1):
+            # print(i)
+            test = [str(i)]
+            bot = Custom_Bot(i, story)
+            # print('grams', bot.grams)
+            tsize = len(bot.grams)
+            for i in range(100):
+                hint = random.choice(bot.grams)
+                # print('on hint', hint)
+                if not i % 10:
+                    print('on gram '+str(i)+' of '+str(tsize))
+                a = random.choice(bot.table.get_row(hint))
+                a = a[-1]
+                # print('1', 'hint', 'answer', hint, a[-1])
+                # populate the list of tests
+                err = bot.test_H_from_err
+                # test += [err(hint, ans) for j in range(n)]
+                test += [err(hint, a)]
+                # print('test', test)
+            tests.append(test)
+            print('test final', test)
+        # convert the tests to rows, print
+        # rows = zip(*tests)
+        for row in tests:
+            result_csv.writerow(row)
+        f.close()
 #
 # main
 #
@@ -163,4 +196,5 @@ if __name__ == '__main__':
     max_gram = int(sys.argv[4])
     # story, grams, hint, answer
     # test_H_from_table(story, save_file, min_gram, max_gram)
-    run_tests_exhaustive(story, save_file, min_gram, max_gram)
+    # run_tests_exhaustive(story, save_file, min_gram, max_gram)
+    run_tests_mc(story, save_file, min_gram, max_gram)
