@@ -68,8 +68,7 @@ class Custom_Bot:
     # use fano's inequality to get maximum bound for entropy
     def H_from_err(self, err, l):
         # row = [key for key, val in self.table.get_row(hint).iteritems()]
-        # print('err',err)
-        he = (-1.0*log2(err)) - ((1.0-err)*log2(1.0-err))
+        he = (-1.0*log2(err)) - ((1.0-err)*log2(1.0-err)) if err > 0 else -((1.0-err)*log2(1.0-err))
         # print('he',he)
         return he + (err*log2(l)-1) if err > 0.0 else 0.0
         # return 1.0 + err*log2(l)
