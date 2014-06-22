@@ -154,7 +154,7 @@ def run_tests_exhaustive(story, save_file, min_gram, max_gram):
 
 
 def run_tests_mc(story, save_file, min_gram, max_gram):
-    with open('../results/'+save_file, 'wb') as f:
+    with open('results/'+save_file, 'wb') as f:
         result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
         # number of test
@@ -198,7 +198,7 @@ def run_tests_mc(story, save_file, min_gram, max_gram):
 #
 
 if __name__ == '__main__':
-    story = open('../texts/'+sys.argv[1], 'r').read()
+    story = open('texts/'+sys.argv[1], 'r').read()
     save_file = sys.argv[2]
     min_gram = int(sys.argv[3])
     max_gram = int(sys.argv[4])
