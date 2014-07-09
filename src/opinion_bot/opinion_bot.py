@@ -7,7 +7,7 @@ from numpy import random, log2, mean
 from transition_table import Transition_Table
 
 
-class Custom_Bot:
+class Opinion_Bot:
     '''reads in input from a file and builds a markov table as a result'''
     n = 0
     text_list = []
@@ -68,8 +68,7 @@ class Custom_Bot:
     # use fano's inequality to get maximum bound for entropy
     def H_from_err(self, err, l):
         # row = [key for key, val in self.table.get_row(hint).iteritems()]
-        # print('err',err)
-        he = (-1.0*log2(err)) - ((1.0-err)*log2(1.0-err))
+        he = (-1.0*log2(err)) - ((1.0-err)*log2(1.0-err)) if err > 0 else -((1.0-err)*log2(1.0-err))
         # print('he',he)
         return he + (err*log2(l)-1) if err > 0.0 else 0.0
         # return 1.0 + err*log2(l)
@@ -111,7 +110,7 @@ def test_H_from_table(story, save_file, min_gram, max_gram):
         result_csv = csv.writer(f)
         result_csv.writerow(['H from table'])
         for i in range(min_gram, max_gram+1):
-            bot = Custom_Bot(i, story)
+            bot = Opinion_Bot(i, story)
             x = bot.H_from_table()
             print(x)
             result_csv.writerow([str(x)])
@@ -127,7 +126,7 @@ def run_tests_exhaustive(story, save_file, min_gram, max_gram):
         for i in range(min_gram, max_gram+1):
             # print(i)
             test = [str(i)]
-            bot = Custom_Bot(i, story)
+            bot = Opinion_Bot(i, story)
             # print('grams', bot.grams)
             i = 0
             tsize = len(bot.grams)
@@ -154,7 +153,7 @@ def run_tests_exhaustive(story, save_file, min_gram, max_gram):
 
 
 def run_tests_mc(story, save_file, min_gram, max_gram):
-    with open('../results/'+save_file, 'wb') as f:
+    with open('results/'+save_file, 'wb') as f:
         result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
         # number of test
@@ -162,7 +161,7 @@ def run_tests_mc(story, save_file, min_gram, max_gram):
         for i in range(min_gram, max_gram+1):
             print('on gram '+str(i)+' of '+str(max_gram))
             test = [str(i)]
-            bot = Custom_Bot(i, story)
+            bot = Opinion_Bot(i, story)
             # print('grams', bot.grams)
             gram_keys = bot.grams.keys()
             num_grams = len(gram_keys)
@@ -198,7 +197,7 @@ def run_tests_mc(story, save_file, min_gram, max_gram):
 #
 
 if __name__ == '__main__':
-    story = open('../texts/'+sys.argv[1], 'r').read()
+    story = open('texts/'+sys.argv[1], 'r').read()
     save_file = sys.argv[2]
     min_gram = int(sys.argv[3])
     max_gram = int(sys.argv[4])
