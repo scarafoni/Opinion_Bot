@@ -1,3 +1,4 @@
+import itertools
 class Transition_Table:
     '''holds n-gram transitions for a markov chain'''
     table = {}
@@ -20,18 +21,10 @@ class Transition_Table:
                 self.table[prev_gram, next_gram] += 1
             else:
                 self.table[prev_gram, next_gram] = 1
-        print('done entering grams')
         self.normalize_table()
 
-    # normalize the table
+    ''' normalize the table (all rows probabilities add to 1 '''
     def normalize_table(self):
-        print('normalizing')
-        '''
-        for key, val in self.gram_probs.iteritems():
-            self.gram_probs[key] /= self.text_size
-        print('done normalizing total counts')
-        '''
-
         for gram in self.grams:
             row = self.get_row(gram)
             tot = float(sum(row[col] for col in row))
@@ -39,11 +32,8 @@ class Transition_Table:
             for key, val in row.iteritems():
                 if tot != 0:
                     self.table[key] /= tot
-            # print('finished normalizing row')
-            # print(self.get_row(gram))
-        print('done normalizing')
 
-    # returns KEYS for prev/next gram combos in a rowj
+    ''' returns KEYS for prev/next gram combos in a row '''
     def get_row(self, gram):
         row = {}
         for key, value in self.table.iteritems():
@@ -63,9 +53,12 @@ class Transition_Table:
 
     # testing pring function, is usually to big to handle
     def print_table(self):
+        for gram1, gram2 in itertools.product(*[self.table, self.table[gram1]]):
+            print(gram1, gram2, self.table[gram1, gram2])
+        '''
         for gram1 in self.table:
             row_count = 0.0
             for gram2 in self.table[gram1]:
                 row_count += self.table[gram1, gram2]
                 print(gram1, gram2, self.table[gram1, gram2])
-            print('row count', row_count)
+        '''
