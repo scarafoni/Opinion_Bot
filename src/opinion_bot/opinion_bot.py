@@ -14,17 +14,16 @@ class Opinion_Bot:
     grams = {}
 
     def __init__(self, n, text):
-        # text corpus as list of words
         text = text.translate(None, string.punctuation)
         text = ' '.join(text.split())
         self.text_list = text.split()
-        # gram number
         self.n = n
+
         # list of grams
         grams = ngrams(self.text_list, n)
         grams_nd = self.rm_dup(grams)
         self.grams = {tuple(gram): float(grams.count(gram)) for gram in grams_nd}
-        # print('grams dic', self.grams)
+
         # transition table
         self.table = Transition_Table(self.text_list, self.grams,
                                       self.n, len(grams))
@@ -48,35 +47,25 @@ class Opinion_Bot:
 
     # predict the next word from a given gram
     def predict(self, gram):
-        # print('gram', gram)
         row = [key for key, val in self.table.get_row(gram).iteritems()]
         row_probs = [val for key, val in self.table.get_row(gram).iteritems()]
-        # print('row probs', row_probs)
         index = random.choice(len(row), 1, p=row_probs)[0]
-        # print('prediction', row[index][-1])
         return row[index][-1][-1]
 
     # wrapper for below two
     def test_H_from_err(self, hint, answer):
         row = [key for key, val in self.table.get_row(hint).iteritems()]
         l = float(len(row))
-        # print('hint','answer',hint,answer)
-        # print(self.table.get(hint,answer))
         err = 1 - self.table.get(hint, answer)
         return self.H_from_err(err, l)
 
     # use fano's inequality to get maximum bound for entropy
     def H_from_err(self, err, l):
-        # row = [key for key, val in self.table.get_row(hint).iteritems()]
         he = (-1.0*log2(err)) - ((1.0-err)*log2(1.0-err)) if err > 0 else -((1.0-err)*log2(1.0-err))
-        # print('he',he)
         return he + (err*log2(l)-1) if err > 0.0 else 0.0
-        # return 1.0 + err*log2(l)
 
     # returns probability of error
     def err_from_prediction(self, hint, answer, l):
-        # if there's only one gram to transition to then ignore
-        # row = [key for key, val in self.table.get_row(hint).iteritems()]
         if l == 1:
             # print('only one option on',hint)
             return 0
@@ -116,7 +105,7 @@ def test_H_from_table(story, save_file, min_gram, max_gram):
             result_csv.writerow([str(x)])
         f.close()
 
-
+''' calculate H from teh totality of the MC table '''
 def run_tests_exhaustive(story, save_file, min_gram, max_gram):
     with open('../results/'+save_file, 'wb') as f:
         result_csv = csv.writer(f)
@@ -131,28 +120,22 @@ def run_tests_exhaustive(story, save_file, min_gram, max_gram):
             i = 0
             tsize = len(bot.grams)
             for hint in bot.grams:
-                # print('on hint', hint)
                 if not i % 10:
                     print('on gram '+str(i)+' of '+str(tsize))
                 for a in bot.table.get_row(hint):
                     a = a[-1]
-                    # print('1', 'hint', 'answer', hint, a[-1])
-                    # populate the list of tests
                     err = bot.test_H_from_err
-                    # test += [err(hint, ans) for j in range(n)]
                     test += [err(hint, a)]
-                    # print('test', test)
                 i += 1
             tests.append(test)
             print('test final', test)
         # convert the tests to rows, print
-        # rows = zip(*tests)
         for row in tests:
             result_csv.writerow(row)
         f.close()
 
-
-def run_tests_mc(story, save_file, min_gram, max_gram):
+''' calculate H just from a sample size '''
+def run_tests_mc(story, save_file, min_gram, max_gram, num_tests):
     with open('results/'+save_file, 'wb') as f:
         result_csv = csv.writer(f)
         result_csv.writerow(['upper bound H from error'])
@@ -165,7 +148,7 @@ def run_tests_mc(story, save_file, min_gram, max_gram):
             # print('grams', bot.grams)
             gram_keys = bot.grams.keys()
             num_grams = len(gram_keys)
-            for j in range(100):
+            for j in range(num_tests):
                 hint = random.randint(num_grams)
                 hint = gram_keys[hint]
                 row = bot.table.get_row(hint)
@@ -174,20 +157,11 @@ def run_tests_mc(story, save_file, min_gram, max_gram):
                     hint = gram_keys[hint]
                     row = bot.table.get_row(hint)
                 ax = random.randint(len(row))
-                # print('ax',ax)
-                # print('hint',hint)
-                # print('key',row.keys())
                 a = row.keys()[ax]
-                # print('a',a)
                 a = a[-1]
-                # print('1', 'hint', 'answer', hint, a[-1])
-                # populate the list of tests
                 err = bot.test_H_from_err
-                # test += [err(hint, ans) for j in range(n)]
                 test += [err(hint, a)]
-                # print('test', test)
             tests.append(test)
-            # print('test final', test)
             print('average',mean([float(x) for x in test[1:]]))
         for row in tests:
             result_csv.writerow(row)
